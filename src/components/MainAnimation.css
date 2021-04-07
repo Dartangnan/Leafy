@@ -1,0 +1,51 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #d3e9d6;
+}
+
+svg {
+  margin-top: 150px;
+  width: 500px;
+  height: 500px;
+}
+
+.logo {
+  display: grid;
+  place-items: center;
+}
+
+#left-leaf {
+  opacity: 0;
+  /* transform-origin: bottom 50%; */
+}
+
+#right-leaf {
+  opacity: 0;
+  /* transform-origin: bottom 50%; */
+}
+
+#name_leafy {
+  margin-top: 15px;
+  opacity: 0;
+}
+
+#root,
+#banana,
+#tomato {
+  transform-origin: 45% 65%;
+}
+
+#main-leaf {
+  transform: translateX(-30px);
+  opacity: 0;
+}
+
+#outer-arc {
+  opacity: 0;
+}
+
+#shadow {
+  opacity: 0;
+}

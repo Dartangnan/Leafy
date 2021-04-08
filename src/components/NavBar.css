@@ -1,0 +1,55 @@
+.app {
+  display: flex;
+  flex-flow: row;
+}
+.nav-bar {
+  position: fixed;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  height: 100vh;
+  width: 400px;
+  box-shadow: 5px 0 30px 2px rgba(161, 161, 161, 0.61);
+  margin-right: 20px;
+  background-image: url("../images/nav-bg.png"),
+    linear-gradient(to bottom right, #568548, #5d8d41);
+}
+
+.nav-links {
+  font-family: "Segoe UI";
+  color: #545554;
+  font-size: 2rem;
+  display: flex;
+  flex-flow: column;
+  background-color: white;
+  padding: 0 0;
+}
+
+.nav-link {
+  color: #545554;
+  text-decoration: none;
+  padding: 15px 25px;
+  border-bottom: 1px solid #54555471;
+  transition: transform 0.2s ease-out;
+}
+
+.nav-link:hover {
+  color: white;
+  background-color: #b7da98;
+  border-bottom: none;
+  transform: translateX(10px);
+  transition: transform 0.2s ease-out;
+}
+
+.last-link {
+  border-bottom: none;
+}
+
+.lower-nav {
+  align-self: flex-end;
+  padding-right: 5px;
+}
+
+.upper-nav {
+  display: flex;
+}

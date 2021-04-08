@@ -5,7 +5,8 @@ import anime from "animejs";
 const MainAnimation = () => {
   const elementTest = useRef(null);
   useEffect(() => {
-    console.log(elementTest.current);
+    // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
     // -=-=-= All the objects of the animation =-=-=-
     const mainLeaf = elementTest.current.querySelector("#main-leaf");
     const leftLeaf = elementTest.current.querySelector("#left-leaf");
@@ -32,8 +33,9 @@ const MainAnimation = () => {
     leftLeaf.style.transform = "rotate(45deg)";
     rightLeaf.style.transform = "rotate(-45deg)";
     leafyName.style.transform = "translateY(70px)";
-    // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-    // -=-=-=-= Animation =-=-=-=-
+    // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+    // -=-=-=-=-=-=-=-=-=-= Animation =-=-=-=-=-=-=-=-=-=-
     const tl = anime.timeline({
       easing: "easeOutElastic(1, .6)",
       duration: "1200",
@@ -57,10 +59,7 @@ const MainAnimation = () => {
       .add({
         targets: [potato, mainLeaf, banana, tomato],
         translateY: 0,
-        // easing: "easeOutElastic(1,0.6)",
         duration: "500",
-        // easing: "spring(1, 10, 10, 0)",
-        //   easing: "easeInOutExpo",
       })
       .add(
         {
@@ -84,18 +83,19 @@ const MainAnimation = () => {
         easing: "easeOutQuad",
       })
       .add({ targets: [arc, shadow], opacity: 1, duration: 4500 }, "-=1000")
-      .add({
-        targets: logoFull,
-        opacity: 0,
-        // translateY: -600,
-      });
+      .add(
+        {
+          targets: logoFull,
+          opacity: 0,
+        },
+        "-=2000"
+      );
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   }, []);
-  const onLoadAnimation = () => {
-    console.log(elementTest);
-  };
+
   return (
-    <div ref={elementTest} onClick={onLoadAnimation} id="animation">
+    // -=-=-=-=-=-=-=-=-=-= SVG elements =-=-=-=-=-=-=-=-=-=-
+    <div ref={elementTest} id="animation">
       <div className="logo">
         <svg
           xmlns="http://www.w3.org/2000/svg"

@@ -15,10 +15,9 @@ import MainAnimation from "./MainAnimation";
 
 const App = () => {
   return (
-    <div className="app">
-      <BrowserRouter>
+    <BrowserRouter>
+      <div className="app">
         <NavBar />
-
         <Switch>
           <div className="app-body">
             <Route path="/" exact component={Home} />
@@ -30,8 +29,8 @@ const App = () => {
             <Route path="/Login" component={Login} />
           </div>
         </Switch>
-      </BrowserRouter>
-    </div>
+      </div>
+    </BrowserRouter>
   );
 };
 

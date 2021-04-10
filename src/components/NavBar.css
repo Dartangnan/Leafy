@@ -1,12 +1,13 @@
 .nav-bar {
+  position: sticky;
+  top: 0;
   display: flex;
   flex-flow: column;
   justify-content: space-around;
   height: 100vh;
   min-height: 100%;
-  width: 400px;
+  width: 470px;
   box-shadow: 5px 0 30px 0px rgba(0, 0, 0, 0.178);
-  margin-right: 20px;
   background-image: linear-gradient(to bottom right, #568548, #89cc62);
   /* border-bottom-right-radius: 35px;
   border-top-right-radius: 35px; */
@@ -120,7 +121,7 @@
   font-size: 1.4rem;
   color: white;
   text-indent: 10px;
-  padding: 25px 0 0 25px;
+  padding: 25px 0 0 35px;
   margin-left: 5px;
   text-align: left;
 }
@@ -161,7 +162,7 @@
   width: 50px;
   height: 50px;
   z-index: 5;
-  transform: translateX(-100%) rotate(-180deg);
+  transform: translateX(-50px);
   transition: all 1s ease-out;
 }
 
@@ -169,18 +170,17 @@
 
 .hidden-bar {
   transition: all 1s ease-out;
-  transform: translatex(-100%);
-
-  margin-left: -80%;
+  /* transform: translatex(-100%); */
+  margin-left: -470px;
 }
 
 .show-arrow {
   transition: all 1s ease-out;
-  transform: translateX(1460%) rotate(180deg);
+  transform: translateX(500px);
   cursor: pointer;
 }
 
 .show-arrow:hover {
   transition: all 0.5s ease-in;
-  transform: translateX(1470%) rotate(180deg);
+  transform: translateX(510px);
 }

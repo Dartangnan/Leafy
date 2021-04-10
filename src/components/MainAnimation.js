@@ -18,8 +18,8 @@ const MainAnimation = () => {
     const banana = elementTest.current.querySelector("#banana");
     const tomato = elementTest.current.querySelector("#tomato");
     const shadow = elementTest.current.querySelector("#shadow");
-    const svgMain = elementTest.current.querySelector("#mainObj");
-    console.log(mainLeaf);
+    // const svgMain = elementTest.current.querySelector("#mainObj");
+    // console.log(mainLeaf);
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
     // -=-=-=-= All the objects of the animation =-=-=-=-

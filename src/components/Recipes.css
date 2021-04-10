@@ -1,0 +1,53 @@
+h1 {
+  font-family: "Poppins";
+  font-size: 4rem;
+  color: #5e8e3f;
+}
+
+hr {
+  /* height: 0px;
+  border-color: #969696; */
+  width: 50%;
+  margin-bottom: 25px;
+}
+.recipes-container {
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  align-items: center;
+}
+
+.search-bar {
+  display: flex;
+  width: 40%;
+  justify-content: space-around;
+}
+
+.search-btn {
+  width: 40px;
+}
+
+.search-input {
+  width: 70%;
+  background-color: #e2e2e2;
+  border: 1px solid #b3b3b3;
+  border-radius: 50px;
+  outline: none;
+  padding: 0 20px;
+  font-family: "Poppins";
+  font-size: 1rem;
+  color: rgb(51, 50, 50);
+  margin: 0 5px;
+}
+
+.menu-btn {
+  font-family: "Poppins";
+  color: white;
+  background-color: #b7da98;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  padding: 5px 20px;
+  cursor: pointer;
+  outline: none;
+}

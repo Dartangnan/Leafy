@@ -21,7 +21,7 @@ const renderInputBar = (formProps) => {
 const renderComponents = (recipeList) => {
   return recipeList.map((recipe) => {
     return (
-      <div className="recipe">
+      <div key={recipe.id} className="recipe">
         <div className="recipe-img">
           <img alt="recipe" src={recipe.image} />
         </div>
@@ -37,7 +37,7 @@ const renderComponents = (recipeList) => {
             className="recipe-description"
           ></span>
         </div>
-        <DaysOfWeekSelector />
+        <DaysOfWeekSelector currentRecipe={recipe} />
       </div>
     );
   });
@@ -53,9 +53,7 @@ const renderInputBtn = (formProps) => {
 const Recipes = (props) => {
   //
   // -=-=-=-=-= useEffect Hook =-=-=-=-=-=-
-  useEffect(() => {
-    console.log(!props.recipeList[0]);
-  }, []);
+  useEffect(() => {}, []);
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
   const onSubmit = (formValues) => {

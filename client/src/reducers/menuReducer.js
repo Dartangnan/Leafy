@@ -1,9 +1,20 @@
-export default (state = [], action) => {
+export default (state = {}, action) => {
   switch (action.type) {
     case "ADD_RECIPE":
-      return [...state, action.payload];
+      const nextState = { ...state };
+      if (!nextState || !nextState[action.payload[1]]) {
+        nextState[action.payload[1]] = action.payload[0];
+        return nextState;
+      } else {
+        nextState[action.payload[1]] = {
+          ...nextState[action.payload[1]],
+          ...action.payload[0],
+        };
+        return nextState;
+      }
+
     case "DELETE_RECIPE":
-      return [...state, action.payload];
+      return state;
     default:
       return state;
   }

@@ -47,7 +47,76 @@ hr {
   border: none;
   border-radius: 50px;
   font-size: 1rem;
-  padding: 5px 20px;
+  padding: 7px 20px 0px;
   cursor: pointer;
   outline: none;
+  text-decoration: none;
+}
+
+.all-recipes {
+  display: flex;
+  flex-flow: column;
+  font-family: "Poppins";
+  border-bottom: 1px solid #848484;
+  padding: 20px 10px;
+  margin-top: 60px;
+}
+
+.recipe {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-top: 1px solid #848484;
+  padding: 25px 0;
+}
+
+.recipe-img {
+  width: 30%;
+}
+
+.recipe-img img {
+  width: 70%;
+}
+
+.recipe-info {
+  width: 60%;
+}
+
+.recipe-title {
+  margin-top: 0;
+}
+
+.recipe-description {
+  color: rgb(77, 77, 77);
+  font-size: 0.8rem;
+}
+
+.recipe-description a {
+  text-decoration: none;
+  font-style: none;
+}
+
+.days-of-week {
+  width: 10%;
+  margin-left: 40px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.day-add-btn {
+  font-size: 1rem;
+  color: rgb(70, 70, 70);
+  display: grid;
+  place-items: center;
+  background-color: #b7da98;
+  margin: 5px 5px;
+  padding: 3px 1px;
+  width: 40px;
+  cursor: pointer;
+}
+
+.day-added {
+  font-weight: bolder;
+  color: rgb(255, 255, 255);
+  background-color: #6d8559;
 }

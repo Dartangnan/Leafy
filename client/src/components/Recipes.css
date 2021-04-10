@@ -1,0 +1,122 @@
+h1 {
+  font-family: "Poppins";
+  font-size: 4rem;
+  color: #5e8e3f;
+}
+
+hr {
+  /* height: 0px;
+  border-color: #969696; */
+  width: 50%;
+  margin-bottom: 25px;
+}
+.recipes-container {
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  align-items: center;
+}
+
+.search-bar {
+  display: flex;
+  width: 40%;
+  justify-content: space-around;
+}
+
+.search-btn {
+  width: 40px;
+}
+
+.search-input {
+  width: 70%;
+  background-color: #e2e2e2;
+  border: 1px solid #b3b3b3;
+  border-radius: 50px;
+  outline: none;
+  padding: 0 20px;
+  font-family: "Poppins";
+  font-size: 1rem;
+  color: rgb(51, 50, 50);
+  margin: 0 5px;
+}
+
+.menu-btn {
+  font-family: "Poppins";
+  color: white;
+  background-color: #b7da98;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  padding: 7px 20px 0px;
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+}
+
+.all-recipes {
+  display: flex;
+  flex-flow: column;
+  font-family: "Poppins";
+  border-bottom: 1px solid #848484;
+  padding: 20px 10px;
+  margin-top: 60px;
+}
+
+.recipe {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-top: 1px solid #848484;
+  padding: 25px 0;
+}
+
+.recipe-img {
+  width: 20%;
+}
+
+.recipe-img img {
+  width: 80%;
+}
+
+.recipe-info {
+  width: 70%;
+}
+
+.recipe-title {
+  margin-top: 0;
+}
+
+.recipe-description {
+  color: rgb(77, 77, 77);
+  font-size: 0.8rem;
+}
+
+.recipe-description a {
+  text-decoration: none;
+  font-style: none;
+}
+
+.days-of-week {
+  width: 15%;
+  margin-left: 40px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.day-add-btn {
+  font-size: 1rem;
+  color: rgb(70, 70, 70);
+  display: grid;
+  place-items: center;
+  background-color: #b7da98;
+  margin: 5px 5px;
+  padding: 3px 1px;
+  width: 40px;
+  cursor: pointer;
+}
+
+.day-added {
+  font-weight: bolder;
+  color: rgb(255, 255, 255);
+  background-color: #6d8559;
+}

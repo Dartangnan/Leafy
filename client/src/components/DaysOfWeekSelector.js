@@ -7,7 +7,6 @@ const DaysOfWeekSelector = (props) => {
   //
   // Building the current day in a way to omit the time (HH-MM-SS):
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  // console.log(props.menuCurrent);
   const today = new Date();
   const date = `${today.getFullYear()}-${
     today.getMonth() + 1
@@ -16,23 +15,17 @@ const DaysOfWeekSelector = (props) => {
   // Retrieve the current date in milliseconds:
   const dateTest = new Date(date);
   const todayMS = dateTest.valueOf();
-
+  const currentDay = today.getDay() - 1 === -1 ? 6 : today.getDay() - 1;
+  const idArray = daysOfWeek.map((day, index) => {
+    return todayMS + (index - currentDay) * 86400000;
+  });
   // -=-=-=-=-= HELPER FUNCTIONS =-=-=-=-=-
-  const findActive = (domElements, todayMS, today) => {
+  const findActive = (domElements, todayMS, today, idArray) => {
     //
 
-    const currentDay = today.getDay() - 1 === -1 ? 6 : today.getDay() - 1;
-    console.log("in2");
-
-    const idArray = daysOfWeek.map((day, index) => {
-      return todayMS + (index - currentDay) * 86400000;
-    });
-
     domElements.querySelectorAll(".day-add-btn").forEach((el, i) => {
-      console.log(props.menuCurrent, idArray[i]);
       if (!props.menuCurrent[idArray[i]]) return;
       if (!props.menuCurrent[idArray[i]][props.currentRecipe.id]) return;
-      console.log("in3");
       el.classList.add("day-added");
     });
   };
@@ -45,26 +38,37 @@ const DaysOfWeekSelector = (props) => {
     // Cheack if the target was one of the buttons which have only 3 characters:
     if (e.target.innerText.length !== 3) return;
 
-    // Change the style of the button clicked
-    e.target.classList.toggle("day-added");
+    if (e.target.classList.contains("day-added")) {
+      e.target.classList.remove("day-added");
+      const dayID =
+        idArray[daysOfWeek.findIndex((el) => el === `${e.target.innerText}`)];
+      props.deleteRecipeToMenu(dayID, props.currentRecipe.id);
 
-    // Define which day was clicked so the meal can be selected and assigned properly:
-    const currentDay = today.getDay() - 1 === -1 ? 6 : today.getDay() - 1;
-    const daySelected = daysOfWeek.findIndex((el) => el === e.target.innerText);
-    let diff = daySelected - currentDay;
-    // Finding the day selected in milliseconds so can be used as a key in the future
-    const daySelectedID = todayMS + diff * 86400000;
-    props.addRecipeToMenu(props.currentRecipe, daySelectedID);
-    // console.log(props.currentRecipe.id);
+      // Change the style of the button clicked
+
+      return;
+    } else {
+      // Change the style of the button clicked
+      e.target.classList.add("day-added");
+      // Define which day was clicked so the meal can be selected and assigned properly:
+      const currentDay = today.getDay() - 1 === -1 ? 6 : today.getDay() - 1;
+      const daySelected = daysOfWeek.findIndex(
+        (el) => el === e.target.innerText
+      );
+      let diff = daySelected - currentDay;
+      // Finding the day selected in milliseconds so can be used as a key in the future
+      const daySelectedID = todayMS + diff * 86400000;
+      props.addRecipeToMenu(props.currentRecipe, daySelectedID);
+
+      return;
+    }
   };
   //
   // -=-=-=-=-= USE EFFECT AND USE REF=-=-=-=-=-
   const weekDaysDivs = useRef(null);
   // Make sure that the boxes are selected/ticked when user navigates in the app but comes back to the Recipes page
   useEffect((currentDay) => {
-    // console.log("rerender");
-    findActive(weekDaysDivs.current, todayMS, today);
-    // console.log(weekDaysDivs.current);
+    findActive(weekDaysDivs.current, todayMS, today, idArray);
   });
   return (
     <div ref={weekDaysDivs} onClick={handleClick} className="days-of-week">
@@ -80,6 +84,7 @@ const DaysOfWeekSelector = (props) => {
 };
 
 const mapStateToProps = (state) => {
+  // console.log(state);
   return { menuCurrent: state.menuReducer };
 };
 

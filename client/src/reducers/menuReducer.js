@@ -1,3 +1,5 @@
+import actions from "redux-form/lib/actions";
+
 export default (state = {}, action) => {
   switch (action.type) {
     case "ADD_RECIPE":
@@ -14,7 +16,15 @@ export default (state = {}, action) => {
       }
 
     case "DELETE_RECIPE":
-      return state;
+      const newState = { ...state };
+      console.log(newState, action.payload.dayId, action.payload.currentId);
+      let test = delete newState[action.payload.dayId][
+        action.payload.currentId
+      ];
+      console.log(test);
+
+      console.log(newState);
+      return newState;
     default:
       return state;
   }

@@ -75,6 +75,7 @@ hr {
 }
 
 .recipe-img img {
+  cursor: pointer;
   width: 80%;
 }
 
@@ -84,6 +85,14 @@ hr {
 
 .recipe-title {
   margin-top: 0;
+  text-decoration: none;
+  color: black;
+}
+
+.recipe-title h2 {
+  cursor: pointer;
+  margin-top: 0;
+  display: inline-block;
 }
 
 .recipe-description {

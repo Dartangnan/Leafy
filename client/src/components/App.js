@@ -10,6 +10,7 @@ import Overall from "./Overall";
 import Menu from "./Menu";
 import Recipes from "./Recipes";
 import NavBar from "./NavBar";
+import SingleRecipe from "./SingleRecipe";
 // import MainAnimation from "./MainAnimation";
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
@@ -28,6 +29,7 @@ const App = () => {
               <Route path="/GroceryList" component={GroceryList} />
               <Route path="/Recipes/Menu" component={Menu} />
               <Route path="/Login" component={Login} />
+              <Route path="/SingleRecipe/:id" component={SingleRecipe} />
             </div>
           </Fragment>
         </Switch>

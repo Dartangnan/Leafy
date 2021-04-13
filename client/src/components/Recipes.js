@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./Recipes.css";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
@@ -6,6 +6,8 @@ import searchIcon from "../images/search-icon.svg";
 import { Link } from "react-router-dom";
 import { fetchRecipes } from "../actions";
 import DaysOfWeekSelector from "./DaysOfWeekSelector";
+import SingleRecipe from "./SingleRecipe";
+import userEvent from "@testing-library/user-event";
 // -=-=-=-=-= Helper Functions =-=-=-=-=-=-
 const renderInputBar = (formProps) => {
   return (
@@ -18,32 +20,7 @@ const renderInputBar = (formProps) => {
   );
 };
 
-const renderComponents = (recipeList) => {
-  return recipeList.map((recipe) => {
-    return (
-      <div key={recipe.id} className="recipe">
-        <div className="recipe-img">
-          <img alt="recipe" src={recipe.image} />
-        </div>
-        <div className="recipe-info">
-          <h2 className="recipe-title">{recipe.title}</h2>
-          <span
-            dangerouslySetInnerHTML={{
-              __html: recipe.summary.slice(
-                0,
-                recipe.summary.indexOf("All things considered")
-              ),
-            }}
-            className="recipe-description"
-          ></span>
-        </div>
-        <DaysOfWeekSelector currentRecipe={recipe} />
-      </div>
-    );
-  });
-};
-
-const renderInputBtn = (formProps) => {
+const renderInputBtn = () => {
   return <input alt="" className="search-btn" type="image" src={searchIcon} />;
 };
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -53,28 +30,64 @@ const renderInputBtn = (formProps) => {
 const Recipes = (props) => {
   //
   // -=-=-=-=-= useEffect Hook =-=-=-=-=-=-
-  useEffect(() => {}, []);
+
+  const renderComponents = (recipeList) => {
+    return recipeList.map((recipe) => {
+      return (
+        <div id={recipe.id} key={recipe.id} className="recipe">
+          <div className="recipe-img">
+            <Link
+              to={{ pathname: `/SingleRecipe/${recipe.id}`, state: recipe }}
+            >
+              <img alt="recipe" src={recipe.image} />
+            </Link>
+          </div>
+          <div className="recipe-info">
+            <div className="recipe-title">
+              <Link
+                className="recipe-title"
+                to={{ pathname: `/SingleRecipe/${recipe.id}`, state: recipe }}
+              >
+                <h2>{recipe.title}</h2>
+              </Link>
+            </div>
+            <span
+              dangerouslySetInnerHTML={{
+                __html: recipe.summary.slice(
+                  0,
+                  recipe.summary.indexOf("All things considered")
+                ),
+              }}
+              className="recipe-description"
+            ></span>
+          </div>
+          <DaysOfWeekSelector currentRecipe={recipe} />
+        </div>
+      );
+    });
+  };
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
   const onSubmit = (formValues) => {
     props.fetchRecipes(formValues.searchRecipeQuery);
   };
-
   return (
-    <div className="recipes-container">
-      <h1>Recipes</h1>
-      <hr />
-      <form onSubmit={props.handleSubmit(onSubmit)} className="search-bar">
-        <Link to="/Recipes/Menu" className="menu-btn">
-          Menu
-        </Link>
-        <Field name="searchRecipeQuery" component={renderInputBar} />
-        <Field component={renderInputBtn} name="submitSearch" />
-      </form>
-      <div className="all-recipes">
-        {props.recipeList[0] ? renderComponents(props.recipeList[0][1]) : ""}
+    <>
+      <div className="recipes-container">
+        <h1>Recipes</h1>
+        <hr />
+        <form onSubmit={props.handleSubmit(onSubmit)} className="search-bar">
+          <Link to="/Recipes/Menu" className="menu-btn">
+            Menu
+          </Link>
+          <Field name="searchRecipeQuery" component={renderInputBar} />
+          <Field component={renderInputBtn} name="submitSearch" />
+        </form>
+        <div className="all-recipes">
+          {props.recipeList[0] ? renderComponents(props.recipeList[0][1]) : ""}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

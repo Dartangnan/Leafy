@@ -14,6 +14,6 @@ export const addRecipeToMenu = (recipe, daySelectedID) => (dispatch) => {
   dispatch({ type: "ADD_RECIPE", payload: [recipeObj, daySelectedID, idRec] });
 };
 
-export const deleteRecipeToMenu = (recipe) => (dispatch) => {
-  dispatch({ type: "DELETE_RECIPE", payload: recipe });
+export const deleteRecipeToMenu = (dayId, currentId) => (dispatch) => {
+  dispatch({ type: "DELETE_RECIPE", payload: { dayId, currentId } });
 };

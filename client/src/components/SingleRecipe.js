@@ -33,7 +33,10 @@ const SingleRecipe = (props) => {
   );
 
   return ReactDOM.createPortal(
-    <div className="recipe-bg">
+    <div
+      key={recipe.id + Math.trunc(Math.random() * 100)}
+      className="recipe-bg"
+    >
       <div className="single-recipe-container">
         <div className="exit-wrap">
           <Link className="exit-btn" to={"/Recipes"}>

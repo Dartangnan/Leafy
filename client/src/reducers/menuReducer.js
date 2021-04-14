@@ -1,5 +1,3 @@
-import actions from "redux-form/lib/actions";
-
 export default (state = {}, action) => {
   switch (action.type) {
     case "ADD_RECIPE":

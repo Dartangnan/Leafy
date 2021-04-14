@@ -3,8 +3,25 @@ import "./Menu.css";
 import MenuItem from "./MenuItem";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { saveMenuToDB } from "../actions";
+import axios from "axios";
 
 const Menu = (props) => {
+  const testeFunction = async () => {
+    let formData = new FormData();
+    formData.append("firstName", "Dartangnan");
+    console.log(props.currentMenu);
+    const menu = props.currentMenu;
+    console.log(menu);
+    const response = await axios.post("http://localhost:3001/", menu, {
+      mode: "no-cors",
+    });
+    // await fetch("http://localhost:3001/", { method: "POST", body: "hello" });
+
+    console.log("in");
+    // console.log(response);
+  };
+
   //
   const daysWithItems = Object.keys(props.currentMenu).sort((a, b) => {
     return a - b;
@@ -33,7 +50,9 @@ const Menu = (props) => {
         <Link to={"/Recipes"} className="back-btn">
           Back
         </Link>
-        <button className="save-btn">Save</button>
+        <button onClick={testeFunction} className="save-btn">
+          Save
+        </button>
       </div>
     </div>
   );
@@ -43,4 +62,4 @@ const mapStateToProps = (state) => {
   return { currentMenu: state.menuReducer };
 };
 
-export default connect(mapStateToProps, {})(Menu);
+export default connect(mapStateToProps, { saveMenuToDB })(Menu);

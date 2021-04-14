@@ -6,8 +6,6 @@ import searchIcon from "../images/search-icon.svg";
 import { Link } from "react-router-dom";
 import { fetchRecipes } from "../actions";
 import DaysOfWeekSelector from "./DaysOfWeekSelector";
-import SingleRecipe from "./SingleRecipe";
-import userEvent from "@testing-library/user-event";
 // -=-=-=-=-= Helper Functions =-=-=-=-=-=-
 const renderInputBar = (formProps) => {
   return (
@@ -29,7 +27,7 @@ const renderInputBtn = () => {
 
 const Recipes = (props) => {
   //
-  // -=-=-=-=-= useEffect Hook =-=-=-=-=-=-
+  // -=-=-=-=-= Render Components =-=-=-=-=-=-
 
   const renderComponents = (recipeList) => {
     return recipeList.map((recipe) => {

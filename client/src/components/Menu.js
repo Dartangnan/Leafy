@@ -13,9 +13,7 @@ const Menu = (props) => {
     console.log(props.currentMenu);
     const menu = props.currentMenu;
     console.log(menu);
-    const response = await axios.post("http://localhost:3001/", menu, {
-      mode: "no-cors",
-    });
+    const response = await axios.post("http://localhost:3001/", menu);
     // await fetch("http://localhost:3001/", { method: "POST", body: "hello" });
 
     console.log("in");

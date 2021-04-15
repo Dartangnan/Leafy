@@ -16,3 +16,72 @@ hr {
   padding: 25px;
   align-items: center;
 }
+
+.user-information {
+  margin-top: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 80%;
+}
+
+.form-field {
+  width: 50%;
+  min-width: 350px;
+}
+
+.user-information label {
+  margin-right: 50px;
+}
+
+.user-field {
+  font-size: 1.3rem;
+  color: #94af7c;
+  width: 90%;
+  margin-bottom: 60px;
+  border-style: none;
+  border-bottom: 1px solid #5e8e3f;
+  outline: none;
+}
+
+.avatar-input {
+  width: 90%;
+  margin-bottom: 20px;
+}
+
+.update-btn {
+  color: white;
+  background-color: #b7da98;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  padding: 10px 20px 10px;
+  cursor: pointer;
+  outline: none;
+  margin-top: 80px;
+  width: 50%;
+  max-width: 400px;
+}
+
+.update-btn:hover {
+  background-color: #94af7c;
+}
+
+.profile-picture {
+  justify-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 150px;
+  height: 150px;
+  margin: 25px 0 50px 0;
+  z-index: 1;
+  box-shadow: 0px 0px 0 10px #94af7c;
+}
+
+.profile-picture img {
+  min-width: 100%;
+  min-height: 100%;
+}

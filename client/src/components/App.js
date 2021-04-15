@@ -23,7 +23,7 @@ const App = () => {
           <Fragment>
             <div className="app-body">
               <Route path="/" exact component={Home} />
-              <Route path="/Profile" component={Profile} />
+              <Route madeUp="ola" path="/Profile" component={Profile} />
               <Route path="/Recipes" exact component={Recipes} />
               <Route path="/Overall" component={Overall} />
               <Route path="/GroceryList" component={GroceryList} />

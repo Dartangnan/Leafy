@@ -3,18 +3,13 @@ import "./Menu.css";
 import MenuItem from "./MenuItem";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { saveMenuToDB } from "../actions";
-import axios from "axios";
+import { saveMenuToDB, fetchUser } from "../actions";
 
 const Menu = (props) => {
-  const testeFunction = async () => {
-    let formData = new FormData();
-    formData.append("firstName", "Dartangnan");
-    console.log(props.currentMenu);
-    const menu = props.currentMenu;
-    console.log(menu);
-    const response = await axios.post("http://localhost:3001/", menu);
-    // await fetch("http://localhost:3001/", { method: "POST", body: "hello" });
+  const updateMenu = () => {
+    props
+      .saveMenuToDB(props.currentMenu, props.currentUser._id)
+      .then((ans) => props.fetchUser(""));
 
     console.log("in");
     // console.log(response);
@@ -48,7 +43,7 @@ const Menu = (props) => {
         <Link to={"/Recipes"} className="back-btn">
           Back
         </Link>
-        <button onClick={testeFunction} className="save-btn">
+        <button onClick={updateMenu} className="save-btn">
           Save
         </button>
       </div>
@@ -57,7 +52,8 @@ const Menu = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { currentMenu: state.menuReducer };
+  console.log(state);
+  return { currentMenu: state.menuReducer, currentUser: state.userReducer };
 };
 
-export default connect(mapStateToProps, { saveMenuToDB })(Menu);
+export default connect(mapStateToProps, { saveMenuToDB, fetchUser })(Menu);

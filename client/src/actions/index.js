@@ -19,10 +19,9 @@ export const deleteRecipeToMenu = (dayId, currentId) => (dispatch) => {
   dispatch({ type: "DELETE_RECIPE", payload: { dayId, currentId } });
 };
 
-//currentMenu, userId
-
-export const saveMenuToDB = () => async (dispatch) => {
-  const response = await dataBase.patch("");
+export const saveMenuToDB = (menu, id) => async (dispatch) => {
+  const response = await dataBase.patch("/menu", { id, menu });
+  console.log(menu);
   console.log("in");
   console.log(response);
 };
@@ -44,12 +43,7 @@ export const fetchUser = (userName) => async (dispatch) => {
   dispatch({ type: "FETCH_USER", payload: response.data });
 };
 
-export const loadUser = (userData) => (dispatch) => {
-  // console.log(userData);
-  dispatch({ type: "LOAD_USER", payload: userData });
-};
-
 export const updateProfile = (userData) => async (dispatch) => {
-  const response = await dataBase.post("/update", userData);
+  const response = await dataBase.patch("/", userData);
   dispatch({ type: "UPDATE_USER", payload: response.data });
 };

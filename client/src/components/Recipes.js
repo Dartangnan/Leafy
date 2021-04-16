@@ -3,7 +3,7 @@ import "./Recipes.css";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import searchIcon from "../images/search-icon.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { fetchRecipes } from "../actions";
 import DaysOfWeekSelector from "./DaysOfWeekSelector";
 // -=-=-=-=-= Helper Functions =-=-=-=-=-=-
@@ -28,14 +28,18 @@ const renderInputBtn = () => {
 const Recipes = (props) => {
   //
   // -=-=-=-=-= Render Components =-=-=-=-=-=-
-
+  const location = useLocation();
   const renderComponents = (recipeList) => {
     return recipeList.map((recipe) => {
       return (
         <div id={recipe.id} key={recipe.id} className="recipe">
           <div className="recipe-img">
             <Link
-              to={{ pathname: `/SingleRecipe/${recipe.id}`, state: recipe }}
+              to={{
+                pathname: `/SingleRecipe/${recipe.id}`,
+                state: recipe,
+                prevPage: location.pathname,
+              }}
             >
               <img alt="recipe" src={recipe.image} />
             </Link>
@@ -44,7 +48,11 @@ const Recipes = (props) => {
             <div className="recipe-title">
               <Link
                 className="recipe-title"
-                to={{ pathname: `/SingleRecipe/${recipe.id}`, state: recipe }}
+                to={{
+                  pathname: `/SingleRecipe/${recipe.id}`,
+                  state: recipe,
+                  prevPage: location.pathname,
+                }}
               >
                 <h2>{recipe.title}</h2>
               </Link>

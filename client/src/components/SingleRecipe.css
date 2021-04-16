@@ -22,7 +22,7 @@ ul {
   align-items: center;
   padding: 5px 25px;
   width: 40%;
-  height: 80%;
+  height: 90%;
   background-color: white;
   border-radius: 5px;
   box-shadow: 5px 5px 25px 15px rgba(87, 87, 87, 0.267);
@@ -88,7 +88,7 @@ ul {
   padding: 0;
 }
 
-.fa-sort-up {
+.bullet {
   transform: rotate(90deg);
 }
 

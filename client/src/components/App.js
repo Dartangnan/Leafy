@@ -1,6 +1,8 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "./App.css";
+import { fetchUser } from "../actions";
+import { connect } from "react-redux";
 // -=-=-=-=-=-=-=-=-= Components =-=-=-=-=-=-=-=-=-=-
 import GroceryList from "./GroceryList";
 import Login from "./Login";
@@ -14,7 +16,11 @@ import SingleRecipe from "./SingleRecipe";
 // import MainAnimation from "./MainAnimation";
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-const App = () => {
+const App = (props) => {
+  useEffect(() => {
+    props.fetchUser("");
+    console.log("in");
+  });
   return (
     <BrowserRouter>
       <div className="app">
@@ -38,4 +44,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default connect(null, { fetchUser })(App);

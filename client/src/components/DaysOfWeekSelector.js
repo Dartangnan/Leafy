@@ -7,14 +7,15 @@ const DaysOfWeekSelector = (props) => {
   //
   // Building the current day in a way to omit the time (HH-MM-SS):
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+  // Retrieve the current date in milliseconds:
   const today = new Date();
   const date = `${today.getFullYear()}-${
     today.getMonth() + 1
   }-${today.getDate()}`;
-
-  // Retrieve the current date in milliseconds:
   const dateTest = new Date(date);
   const todayMS = dateTest.valueOf();
+  // ------------------------------------------
   const currentDay = today.getDay() - 1 === -1 ? 6 : today.getDay() - 1;
   const idArray = daysOfWeek.map((day, index) => {
     return todayMS + (index - currentDay) * 86400000;

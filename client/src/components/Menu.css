@@ -6,6 +6,7 @@ h1 {
   font-size: 4rem;
   color: #5e8e3f;
   margin-bottom: 0;
+  font-weight: normal;
 }
 
 hr {
@@ -100,6 +101,7 @@ hr {
   cursor: pointer;
   outline: none;
   text-decoration: none;
+  text-align: center;
 }
 
 .back-btn {

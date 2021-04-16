@@ -5,13 +5,13 @@ import "./SingleRecipe.css";
 import xNav from "../images/x-nav-black.svg";
 
 const SingleRecipe = (props) => {
-  console.log(props.location.state);
+  console.log(props);
   const recipe = props.location.state;
 
   const ingredientList = recipe.extendedIngredients.map((item) => {
     return (
       <li>
-        <i class="fas fa-sort-up"></i>
+        <i class="fas fa-sort-up bullet"></i>
         {`${Math.round(item.measures.metric.amount, -1)}
         ${item.measures.metric.unitShort}`}
         &nbsp;-&nbsp;
@@ -39,7 +39,7 @@ const SingleRecipe = (props) => {
     >
       <div className="single-recipe-container">
         <div className="exit-wrap">
-          <Link className="exit-btn" to={"/Recipes"}>
+          <Link className="exit-btn" to={props.location.prevPage}>
             <img alt="x-img" src={xNav} />
           </Link>
         </div>

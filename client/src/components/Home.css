@@ -1,0 +1,98 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  padding: 25px 60px;
+  align-items: center;
+}
+
+.recipe-card {
+  margin: 0 15px 50px;
+  border: 1px solid rgb(192, 192, 192);
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+}
+
+.display-todays-recipe {
+  display: flex;
+  overflow-x: scroll;
+  width: 100%;
+}
+.title-recipe {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bolder;
+  color: white;
+  background: linear-gradient(-45deg, #86c440, #568548);
+  width: 330px;
+  min-height: 110px;
+  text-align: center;
+  padding: 0 10px;
+}
+
+.info-recipe {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  max-width: 300px;
+  text-align: justify;
+  text-indent: 50px;
+  padding: 25px 15px;
+}
+
+.image-recipe {
+  width: 80%;
+  margin: 40px 0;
+}
+.day-selector {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 90%;
+  user-select: none;
+}
+
+.day-selected {
+  font-family: Poppins;
+  font-size: 2.5rem;
+  font-weight: 1000;
+  color: rgb(61, 61, 61);
+  padding: 0 10px;
+  border-left: 1px solid rgb(61, 61, 61);
+  border-right: 1px solid rgb(61, 61, 61);
+}
+
+.day-selected span {
+  font-size: 1.5rem;
+}
+
+.right {
+  transform: rotate(90deg);
+  font-size: 3rem;
+  cursor: pointer;
+}
+
+.left {
+  transform: rotate(-90deg);
+  font-size: 3rem;
+  cursor: pointer;
+}
+
+.home-link {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  margin-bottom: 15px;
+}
+
+.home-link .save-btn {
+  background-color: #96be68;
+}
+
+.home-link .save-btn:hover {
+  background-color: #7ea157;
+}

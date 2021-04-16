@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Field, reduxForm } from "redux-form";
 import "./Profile.css";
 // import axios from "axios";
 import { connect } from "react-redux";
-import { fetchUser, updateProfile } from "../actions";
+import { updateProfile } from "../actions";
 
 const adaptFileEventToValue = (delegate) => (e) => delegate(e.target.files[0]);
-
 const FileInput = ({
   input: { value: omitValue, onChange, onBlur, ...inputProps },
   meta: omitMeta,
@@ -26,10 +25,12 @@ const FileInput = ({
 
 // -=-=-=-=-=-=-=-=-=-=-= COMPONENT =-=-=-=-=-=-=-=-=-=-=-=-=-
 const Profile = (props) => {
-  useEffect(() => {
-    props.fetchUser("");
-  });
+  //
+  //
 
+  //
+  //
+  console.log("INSIDE COMPONENT", props.initialValues);
   const onFormSubmit = (formValues) => {
     const fd = new FormData();
     Object.keys(formValues).forEach((key) => {
@@ -39,13 +40,12 @@ const Profile = (props) => {
         formValues[key] === props.initialValues[key]
       )
         return;
-      console.log(key, formValues[key]);
       fd.append(key, formValues[key]);
     });
     fd.append("name", formValues.name);
     props.updateProfile(fd);
   };
-  console.log(`https://localhost3001${props.initialValues.avatar}`);
+
   return (
     <>
       <div className="profile-container">
@@ -130,13 +130,12 @@ const Profile = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  console.log(state);
-  return { initialValues: state.userReducer };
+const mapStateToProps = (state, ownProps) => {
+  return { initialValues: state.userReducer, isLoaded: state.userReducer };
 };
 
-const formWrappers = reduxForm({ form: "userInfo" })(Profile);
-
-export default connect(mapStateToProps, { fetchUser, updateProfile })(
-  formWrappers
+const formWrappers = reduxForm({ form: "userInfo", enableReinitialize: true })(
+  Profile
 );
+
+export default connect(mapStateToProps, { updateProfile })(formWrappers);

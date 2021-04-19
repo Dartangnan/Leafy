@@ -1,6 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import { connect } from "react-redux";
-import { addRecipeToMenu, deleteRecipeToMenu } from "../actions";
+import {
+  addRecipeToMenu,
+  deleteRecipeToMenu,
+  addToIgredientList,
+  removeFromIgredientList,
+} from "../actions";
 
 // -=-=-=-=-= COMPONENT =-=-=-=-=-
 const DaysOfWeekSelector = (props) => {
@@ -44,6 +49,7 @@ const DaysOfWeekSelector = (props) => {
       const dayID =
         idArray[daysOfWeek.findIndex((el) => el === `${e.target.innerText}`)];
       props.deleteRecipeToMenu(dayID, props.currentRecipe.id);
+      // props.deleteFromIgredientList(props.currentRecipe.id)
 
       // Change the style of the button clicked
 
@@ -59,8 +65,8 @@ const DaysOfWeekSelector = (props) => {
       let diff = daySelected - currentDay;
       // Finding the day selected in milliseconds so can be used as a key in the future
       const daySelectedID = todayMS + diff * 86400000;
-      props.addRecipeToMenu(props.currentRecipe, daySelectedID);
-
+      props.addRecipeToMenu(props.currentRecipe, daySelectedID, null);
+      console.log(props.menuCurrent);
       return;
     }
   };
@@ -92,4 +98,6 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   addRecipeToMenu,
   deleteRecipeToMenu,
+  addToIgredientList,
+  removeFromIgredientList,
 })(DaysOfWeekSelector);

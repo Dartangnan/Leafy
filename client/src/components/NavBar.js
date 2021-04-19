@@ -6,9 +6,11 @@ import imgLower from "../images/bottom-nav-bar-logo.png";
 import leavesAvatar from "../images/leaves-avatar.svg";
 import avatarPicture from "../images/profile_picture.png";
 import xNav from "../images/x-nav.svg";
+import { connect } from "react-redux";
 
 //  -=-=-=-=-=-=-=-= NavBar Component =-=-=-=-=-=-=-=-
-const NavBar = () => {
+const NavBar = (props) => {
+  // console.log(props);
   //
   const navBarDOM = useRef(null);
 
@@ -20,7 +22,7 @@ const NavBar = () => {
   };
 
   const showBar = () => {
-    console.log(navBarDOM.current);
+    // console.log(navBarDOM.current);
     navBarDOM.current.classList.remove("hidden-bar");
     navBarDOM.current
       .querySelector(".arrow-nav-bar")
@@ -34,7 +36,17 @@ const NavBar = () => {
       <div className="upper-nav">
         <div className="avatar">
           <div className="avatar-picture">
-            <img alt="" src={avatarPicture} />
+            <img
+              alt=""
+              src={
+                props.userInfo.avatar
+                  ? `http://localhost:3001${props.userInfo.avatar.replaceAll(
+                      "/",
+                      "\\"
+                    )}`
+                  : ""
+              }
+            />
           </div>
           <img alt="" className="avatar-leaves" src={leavesAvatar} />
           <h4 className="user-name">Dart</h4>
@@ -79,8 +91,8 @@ const NavBar = () => {
         <Link className="nav-link" to="/Overall">
           History
         </Link>
-        <Link className="nav-link" to="/GroceryList">
-          Grocery List
+        <Link className="nav-link" to="/IngredientList">
+          Ingredien tList
         </Link>
         <Link className="nav-link last-link" to="/Login">
           Exit
@@ -97,4 +109,8 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+const mapStateToProps = (state) => {
+  return { userInfo: state.userReducer };
+};
+
+export default connect(mapStateToProps, {})(NavBar);

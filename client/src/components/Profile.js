@@ -30,7 +30,6 @@ const Profile = (props) => {
 
   //
   //
-  console.log("INSIDE COMPONENT", props.initialValues);
   const onFormSubmit = (formValues) => {
     const fd = new FormData();
     Object.keys(formValues).forEach((key) => {

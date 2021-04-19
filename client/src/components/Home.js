@@ -10,12 +10,12 @@ const date = `${today.getFullYear()}-${
 }-${today.getDate()}`;
 const dateTest = new Date(date);
 const todayMS = dateTest.valueOf();
-console.log("IN");
+// console.log("IN");
 // ---------------------------------------------
 const Home = (props) => {
   const location = useLocation();
   const [currentDay, setCurrentDate] = useState(todayMS);
-  console.log(currentDay);
+  // console.log(currentDay);
   const currentDate = new Date(currentDay);
   const currentDayMonth = currentDate.toLocaleString("default", {
     day: "numeric",
@@ -43,7 +43,7 @@ const Home = (props) => {
     } else {
       let todayMenu = menu[`${currentDay}`];
       todayMenuDisplay = Object.keys(menu[`${currentDay}`]).map((item) => {
-        console.log(todayMenu[item]);
+        // console.log(todayMenu[item]);
         return (
           <div className="recipe-card" key={todayMenu[item].id}>
             <div className="title-recipe">{todayMenu[item].title}</div>
@@ -87,7 +87,7 @@ const Home = (props) => {
         </h2>
         <i onClick={goForwardADay} className=" right fas fa-sort-up "></i>
       </div>
-      <div class="display-todays-recipe">{todayMenuDisplay}</div>
+      <div className="display-todays-recipe">{todayMenuDisplay}</div>
     </div>
   );
 };

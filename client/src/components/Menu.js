@@ -6,13 +6,11 @@ import { Link } from "react-router-dom";
 import { saveMenuToDB, fetchUser } from "../actions";
 
 const Menu = (props) => {
+  console.log(props.currentMenu);
   const updateMenu = () => {
     props
       .saveMenuToDB(props.currentMenu, props.currentUser._id)
       .then((ans) => props.fetchUser(""));
-
-    console.log("in");
-    // console.log(response);
   };
 
   //
@@ -52,7 +50,6 @@ const Menu = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return { currentMenu: state.menuReducer, currentUser: state.userReducer };
 };
 

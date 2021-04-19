@@ -7,12 +7,26 @@ export const fetchRecipes = (searchQuery) => async (dispatch) => {
   dispatch({ type: "FETCH_RECIPES", payload: response.data.results });
 };
 
-export const addRecipeToMenu = (recipe, daySelectedID) => (dispatch) => {
-  const idRec = recipe.id;
-  const recipeObj = {};
-  recipeObj[idRec] = recipe;
-  // console.log(recipeObj);
-  dispatch({ type: "ADD_RECIPE", payload: [recipeObj, daySelectedID, idRec] });
+export const addRecipeToMenu = (recipe, daySelectedID, fullMenu) => (
+  dispatch
+) => {
+  if (fullMenu) {
+    const recipeObj = {};
+    const idRec = "";
+    dispatch({
+      type: "ADD_RECIPE",
+      payload: [recipeObj, daySelectedID, idRec, fullMenu],
+    });
+  }
+  if (!fullMenu) {
+    const idRec = recipe.id;
+    const recipeObj = {};
+    recipeObj[idRec] = recipe;
+    dispatch({
+      type: "ADD_RECIPE",
+      payload: [recipeObj, daySelectedID, idRec, fullMenu],
+    });
+  }
 };
 
 export const deleteRecipeToMenu = (dayId, currentId) => (dispatch) => {
@@ -21,9 +35,6 @@ export const deleteRecipeToMenu = (dayId, currentId) => (dispatch) => {
 
 export const saveMenuToDB = (menu, id) => async (dispatch) => {
   const response = await dataBase.patch("/menu", { id, menu });
-  console.log(menu);
-  console.log("in");
-  console.log(response);
 };
 
 export const createProfile = (userInfo) => async (dispatch) => {
@@ -46,4 +57,14 @@ export const fetchUser = (userName) => async (dispatch) => {
 export const updateProfile = (userData) => async (dispatch) => {
   const response = await dataBase.patch("/", userData);
   dispatch({ type: "UPDATE_USER", payload: response.data });
+};
+
+export const addToIgredientList = (recipe, daySelectedID, todayID) => (
+  dispatch
+) => {
+  dispatch({ type: "ADD_ITEM", payload: { recipe, daySelectedID, todayID } });
+};
+
+export const removeFromIgredientList = (itemID) => (dispatch) => {
+  dispatch({ type: "DELETE_ITEM", payload: { itemID } });
 };

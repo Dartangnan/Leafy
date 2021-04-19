@@ -1,0 +1,36 @@
+.grocery-container {
+  display: flex;
+  flex-direction: column;
+  padding: 25px 60px;
+  align-items: center;
+}
+
+.groc-list {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  width: 80%;
+  margin-top: 40px;
+}
+
+.groc-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  margin-bottom: 10px;
+}
+
+.item-title {
+  font-size: 1.2rem;
+}
+
+.item-desc {
+  color: rgb(163, 163, 163);
+}
+
+.delete-btn {
+  max-width: 35px;
+  max-height: 35px;
+  cursor: pointer;
+}

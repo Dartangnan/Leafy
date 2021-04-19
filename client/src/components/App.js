@@ -1,10 +1,10 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "./App.css";
-import { fetchUser } from "../actions";
+import { fetchUser, addRecipeToMenu } from "../actions";
 import { connect } from "react-redux";
 // -=-=-=-=-=-=-=-=-= Components =-=-=-=-=-=-=-=-=-=-
-import GroceryList from "./GroceryList";
+import IngredientList from "./IngredientList";
 import Login from "./Login";
 import Home from "./Home";
 import Profile from "./Profile";
@@ -17,10 +17,15 @@ import SingleRecipe from "./SingleRecipe";
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 const App = (props) => {
-  useEffect(() => {
-    props.fetchUser("");
+  const [isLoaded, setIsLoaded] = useState(0);
+  useEffect(async () => {
+    // if (props.currentUser.name) return;
+    await props.fetchUser("");
+    const totalMenu = await JSON.parse(props.currentUser.menuHistory);
+    await props.addRecipeToMenu("", "", totalMenu);
     console.log("in");
-  });
+  }, [props.currentUser.menuHistory]);
+
   return (
     <BrowserRouter>
       <div className="app">
@@ -32,7 +37,7 @@ const App = (props) => {
               <Route madeUp="ola" path="/Profile" component={Profile} />
               <Route path="/Recipes" exact component={Recipes} />
               <Route path="/Overall" component={Overall} />
-              <Route path="/GroceryList" component={GroceryList} />
+              <Route path="/IngredientList" component={IngredientList} />
               <Route path="/Recipes/Menu" component={Menu} />
               <Route path="/Login" component={Login} />
               <Route path="/SingleRecipe/:id" component={SingleRecipe} />
@@ -44,4 +49,8 @@ const App = (props) => {
   );
 };
 
-export default connect(null, { fetchUser })(App);
+const mapStateToProps = (state) => {
+  return { currentUser: state.userReducer };
+};
+
+export default connect(mapStateToProps, { fetchUser, addRecipeToMenu })(App);

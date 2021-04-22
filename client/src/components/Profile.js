@@ -27,7 +27,9 @@ const FileInput = ({
 const Profile = (props) => {
   //
   //
-
+  if (!props.isLoaded || Object.keys(props.isLoaded).length === 0) {
+    props.history.push("/login");
+  }
   //
   //
   const onFormSubmit = (formValues) => {

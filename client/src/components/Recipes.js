@@ -26,6 +26,10 @@ const renderInputBtn = () => {
 // -=-=-=-=-= Component =-=-=-=-=-=-
 
 const Recipes = (props) => {
+  console.log(props.userReducer);
+  if (!props.userReducer || Object.keys(props.userReducer).length === 0) {
+    props.history.push("/login");
+  }
   //
   // -=-=-=-=-= Render Components =-=-=-=-=-=-
   const location = useLocation();
@@ -102,7 +106,7 @@ const mapStateToProps = (state) => {
     key,
     state.recipeReducer[key],
   ]);
-  return { recipeList: listOfRecipes };
+  return { recipeList: listOfRecipes, userReducer: state.userReducer };
 };
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 

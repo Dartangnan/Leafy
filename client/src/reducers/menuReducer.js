@@ -21,7 +21,9 @@ export default (state = {}, action) => {
 
       const nextState = { ...state };
       if (!nextState || !nextState[action.payload[1]]) {
+        console.log("INSIDE");
         nextState[action.payload[1]] = action.payload[0];
+        console.log(nextState, action.payload[1]);
         return nextState;
       } else {
         nextState[action.payload[1]] = {

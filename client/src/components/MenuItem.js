@@ -20,7 +20,7 @@ const MenuItem = (props) => {
   const itemsOfDay = objKeys.map((item) => {
     return (
       <>
-        <div className="item-content">
+        <div key={props.itemOfMenu[item].id} className="item-content">
           <img alt="" src={props.itemOfMenu[item].image} />
           <h4>{props.itemOfMenu[item].title}</h4>
         </div>

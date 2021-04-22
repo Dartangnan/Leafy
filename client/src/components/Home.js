@@ -10,12 +10,16 @@ const date = `${today.getFullYear()}-${
 }-${today.getDate()}`;
 const dateTest = new Date(date);
 const todayMS = dateTest.valueOf();
-// console.log("IN");
+console.log("IN");
 // ---------------------------------------------
 const Home = (props) => {
+  if (!props.currentUser || Object.keys(props.currentUser).length === 0) {
+    props.history.push("/login");
+  }
   const location = useLocation();
   const [currentDay, setCurrentDate] = useState(todayMS);
   // console.log(currentDay);
+
   const currentDate = new Date(currentDay);
   const currentDayMonth = currentDate.toLocaleString("default", {
     day: "numeric",
@@ -34,7 +38,7 @@ const Home = (props) => {
     setCurrentDate(currentDay + 86400000);
   };
 
-  let todayMenuDisplay = <div>Hey</div>;
+  let todayMenuDisplay = <div>No data available</div>;
 
   if (props.currentUser.menuHistory) {
     const menu = JSON.parse(props.currentUser.menuHistory);

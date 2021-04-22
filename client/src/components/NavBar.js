@@ -7,6 +7,7 @@ import leavesAvatar from "../images/leaves-avatar.svg";
 import avatarPicture from "../images/profile_picture.png";
 import xNav from "../images/x-nav.svg";
 import { connect } from "react-redux";
+import { logOut } from "../actions";
 
 //  -=-=-=-=-=-=-=-= NavBar Component =-=-=-=-=-=-=-=-
 const NavBar = (props) => {
@@ -27,6 +28,11 @@ const NavBar = (props) => {
     navBarDOM.current
       .querySelector(".arrow-nav-bar")
       .classList.remove("show-arrow");
+  };
+
+  const handleClick = (e) => {
+    console.log(e);
+    props.logOut();
   };
   //
   //  -=-=-=-=-=-=-=-= JSX =-=-=-=-=-=-=-=-
@@ -88,13 +94,11 @@ const NavBar = (props) => {
         <Link className="nav-link" to="/Recipes">
           Recipes
         </Link>
-        <Link className="nav-link" to="/Overall">
-          History
-        </Link>
+
         <Link className="nav-link" to="/IngredientList">
-          Ingredien tList
+          Ingredient List
         </Link>
-        <Link className="nav-link last-link" to="/Login">
+        <Link onClick={handleClick} className="nav-link last-link" to="/Login">
           Exit
         </Link>
       </ul>
@@ -113,4 +117,4 @@ const mapStateToProps = (state) => {
   return { userInfo: state.userReducer };
 };
 
-export default connect(mapStateToProps, {})(NavBar);
+export default connect(mapStateToProps, { logOut })(NavBar);

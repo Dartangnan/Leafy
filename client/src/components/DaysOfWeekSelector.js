@@ -49,7 +49,7 @@ const DaysOfWeekSelector = (props) => {
       const dayID =
         idArray[daysOfWeek.findIndex((el) => el === `${e.target.innerText}`)];
       props.deleteRecipeToMenu(dayID, props.currentRecipe.id);
-      // props.deleteFromIgredientList(props.currentRecipe.id)
+      props.removeFromIgredientList(props.currentRecipe);
 
       // Change the style of the button clicked
 
@@ -65,7 +65,9 @@ const DaysOfWeekSelector = (props) => {
       let diff = daySelected - currentDay;
       // Finding the day selected in milliseconds so can be used as a key in the future
       const daySelectedID = todayMS + diff * 86400000;
+      console.log(props.currentRecipe);
       props.addRecipeToMenu(props.currentRecipe, daySelectedID, null);
+      props.addToIgredientList(props.currentRecipe, daySelectedID, todayMS);
       console.log(props.menuCurrent);
       return;
     }

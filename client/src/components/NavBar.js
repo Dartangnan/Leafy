@@ -7,7 +7,7 @@ import leavesAvatar from "../images/leaves-avatar.svg";
 import avatarPicture from "../images/profile_picture.png";
 import xNav from "../images/x-nav.svg";
 import { connect } from "react-redux";
-import { logOut } from "../actions";
+import { logOut, inicialIngredientList, addRecipeToMenu } from "../actions";
 
 //  -=-=-=-=-=-=-=-= NavBar Component =-=-=-=-=-=-=-=-
 const NavBar = (props) => {
@@ -32,6 +32,8 @@ const NavBar = (props) => {
 
   const handleClick = (e) => {
     console.log(e);
+    props.inicialIngredientList({});
+    props.addRecipeToMenu("", "", {});
     props.logOut();
   };
   //
@@ -117,4 +119,8 @@ const mapStateToProps = (state) => {
   return { userInfo: state.userReducer };
 };
 
-export default connect(mapStateToProps, { logOut })(NavBar);
+export default connect(mapStateToProps, {
+  logOut,
+  inicialIngredientList,
+  addRecipeToMenu,
+})(NavBar);

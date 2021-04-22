@@ -57,7 +57,6 @@ app.use(cors(corsOptions));
 // -=-=-=-=-=-=-=-=-=-= Add new user =-=-=-=-=-=-=-=-=-=-=-
 app.post("/", bodyParser.json(), function (req, res) {
   const userInfo = req.body;
-  console.log(userInfo, "CREATE_USER");
   User.findOne({ email: userInfo.email }, function (err, user) {
     if (err) {
       console.log(err);

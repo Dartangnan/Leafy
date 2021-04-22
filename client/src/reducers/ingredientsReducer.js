@@ -46,7 +46,6 @@ export default (state = {}, action) => {
     case "DELETE_INGREDIENTS":
       return "";
     case "INITIAL_INGREDIENTS":
-      console.log(action.payload, "REDUCER");
       return { ...action.payload };
     default:
       return state;

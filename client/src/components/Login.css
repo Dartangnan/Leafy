@@ -99,3 +99,68 @@
   margin-top: -10px;
   display: none;
 }
+
+.error-message-account {
+  font-size: 0.8rem;
+  color: red;
+  display: none;
+}
+
+.login-msg {
+  position: absolute;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  left: auto;
+  bottom: 0;
+  max-width: 300px;
+  text-indent: 15px;
+  text-align: justify;
+  background-color: rgb(122, 163, 128);
+  padding: 25px;
+  transform: translateY(25px);
+  opacity: 0;
+  transition: all 1s ease-out;
+  border-radius: 25px;
+  border-bottom-left-radius: 0;
+
+  border-bottom-right-radius: 0;
+  box-shadow: 0 0 15px 5px rgb(199, 199, 199);
+  color: white;
+}
+
+.login-msg span {
+  font-style: bold;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.close-popup {
+  padding: 0;
+  margin: -10px 0 0;
+  width: 100%;
+  text-align: right;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.text-explanation {
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+.loaded {
+  transform: translateY(0);
+  opacity: 1;
+  transition: all 0.8s ease-out;
+}
+
+.error-not-found-account {
+  font-size: 0.8rem;
+  color: red;
+  display: none;
+}
+
+.close-popup-header {
+  margin-bottom: 0;
+}

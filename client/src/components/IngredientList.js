@@ -20,6 +20,7 @@ const dateTest = new Date(date);
 const todayMS = dateTest.valueOf();
 
 const IngredientList = (props) => {
+  console.log(props.ingredients);
   if (!props.user || Object.keys(props.user).length === 0) {
     props.history.push("/login");
   }
@@ -30,8 +31,10 @@ const IngredientList = (props) => {
     if (
       !props.user.ingredientsList ||
       Object.keys(props.user.ingredientsList).length === 0
-    )
+    ) {
+      grocList = {};
       return;
+    }
     props.inicialIngredientList(JSON.parse(props.user.ingredientsList));
     grocList = {
       ...(props.user.ingredientsList
@@ -153,6 +156,7 @@ const IngredientList = (props) => {
 };
 
 const mapStateToProps = (state) => {
+  console.log(state);
   return {
     user: state.userReducer,
     currentMenu: state.menuReducer,

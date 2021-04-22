@@ -30,6 +30,7 @@ const userSchema = new mongoose.Schema({
   menuHistory: String,
   country: String,
   avatar: String,
+  ingredientsList: String,
 });
 
 const User = mongoose.model("user", userSchema);
@@ -43,6 +44,7 @@ const user = new User({
   country: "",
   avatar: "",
   menuHistory: "",
+  ingredientsList: "",
 });
 // user.save();
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -53,9 +55,27 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 // -=-=-=-=-=-=-=-=-=-= Add new user =-=-=-=-=-=-=-=-=-=-=-
-app.post("/", function (req, res) {
-  const objReq = req.body;
-  res.send(true);
+app.post("/", bodyParser.json(), function (req, res) {
+  const userInfo = req.body;
+  console.log(userInfo, "CREATE_USER");
+  User.findOne({ email: userInfo.email }, function (err, user) {
+    if (err) {
+      console.log(err);
+      res.send(false);
+    }
+    if (!user) {
+      console.log("create user");
+      const user = new User({
+        email: userInfo.email,
+        password: userInfo.password,
+      });
+      console.log(user);
+      res.send(user);
+    } else {
+      console.log("email its been used already");
+      res.send(false);
+    }
+  });
 });
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
@@ -120,11 +140,19 @@ app.patch(
   "/menu",
   bodyParser.json({ limit: "25mb", extended: true }),
   function (req, res) {
+    let newMenu;
+    console.log(req.body);
     User.find({ _id: req.body.id }, (err, user) => {
       if (err) return err;
-      const savedMenu = JSON.parse(user[0].menuHistory);
+      const savedMenu = user[0].menuHistory
+        ? JSON.parse(user[0].menuHistory)
+        : {};
       const updateInfo = req.body.menu;
-      const newMenu = { ...savedMenu, ...updateInfo };
+      if (Object.keys(savedMenu).length === 0) {
+        newMenu = { ...updateInfo };
+      } else {
+        newMenu = { ...savedMenu, ...updateInfo };
+      }
 
       User.updateOne(
         { _id: req.body.id },
@@ -139,8 +167,63 @@ app.patch(
   }
 );
 
+// -=-=-=-=-=-=-=-=-=-= Save Ingredients List =-=-=-=-=-=-=-=-=-=-=-
+app.post(
+  "/saveIngredients",
+  bodyParser.json({ limit: "25mb", extended: true }),
+  (req, res) => {
+    console.log(req.body.ingredientList);
+    User.updateOne(
+      { _id: req.body.id },
+      { ingredientsList: req.body.ingredientList },
+      (err) => {
+        if (err) console.log(err);
+      }
+    );
+    res.send(req.body.ingredientList);
+  }
+);
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+// -=-=-=-=-=-=-=-=-=-= Save Ingredients List =-=-=-=-=-=-=-=-=-=-=-
+app.put(
+  "/deleteIngredients",
+  bodyParser.json({ limit: "25mb", extended: true }),
+  (req, res) => {
+    console.log(req.body);
+    User.updateOne({ _id: req.body.id }, { ingredientsList: "" }, (err) => {
+      if (err) console.log(err);
+    });
+    res.send(JSON.stringify({}));
+  }
+);
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+// -=-=-=-=-=-=-=-=-=-= Save Ingredients List =-=-=-=-=-=-=-=-=-=-=-
+app.post("/login", bodyParser.json({ extended: false }), (req, res) => {
+  const userInfo = req.body;
+  console.log(userInfo);
+  User.findOne(
+    { email: userInfo.email, password: userInfo.password },
+    (err, user) => {
+      if (err) {
+        console.log("not found - ", err);
+      } else if (!user) {
+        res.send(false);
+      } else {
+        const userLogged = {};
+        console.log(Object.keys(user._doc));
+        Object.keys(user._doc).forEach((key) => {
+          if (key === "password") return;
+          userLogged[key] = user._doc[key];
+        });
+
+        res.send(!user ? false : userLogged);
+      }
+    }
+  );
+});
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 app.listen(3001, function () {
   console.log("Listening on port 3001");
 });
-
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-

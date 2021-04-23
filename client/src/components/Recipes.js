@@ -1,12 +1,14 @@
 import React from "react";
-import "./Recipes.css";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
-import searchIcon from "../images/search-icon.svg";
 import { Link, useLocation } from "react-router-dom";
+import "./Recipes.css";
+import searchIcon from "../images/search-icon.svg";
 import { fetchRecipes } from "../actions";
 import DaysOfWeekSelector from "./DaysOfWeekSelector";
-// -=-=-=-=-= Helper Functions =-=-=-=-=-=-
+
+// -=-=-=-=-= Helper Function - Generate search bar =-=-=-=-=-=-
+
 const renderInputBar = (formProps) => {
   return (
     <input
@@ -18,21 +20,38 @@ const renderInputBar = (formProps) => {
   );
 };
 
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+// -=-=-=-=-= Helper Function - Generate search button =-=-=-=-=-=-
+
 const renderInputBtn = () => {
   return <input alt="" className="search-btn" type="image" src={searchIcon} />;
 };
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 // -=-=-=-=-= Component =-=-=-=-=-=-
 
 const Recipes = (props) => {
-  console.log(props.userReducer);
+  //
+  // -=-= In case the user is not logged in should be directed to the login page =-=-
   if (!props.userReducer || Object.keys(props.userReducer).length === 0) {
     props.history.push("/login");
   }
-  //
-  // -=-=-=-=-= Render Components =-=-=-=-=-=-
+
+  // In order to comeback to this route once a single recipe is opened:
   const location = useLocation();
+
+  // -=-=-=-=-= Helper Function - Handle submit =-=-=-=-=-=-
+
+  const onSubmit = (formValues) => {
+    props.fetchRecipes(formValues.searchRecipeQuery);
+  };
+
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+  // -=-=-=-=-= Helper Function - Generate recipes =-=-=-=-=-=-
+
   const renderComponents = (recipeList) => {
     return recipeList.map((recipe) => {
       return (
@@ -70,17 +89,17 @@ const Recipes = (props) => {
               }}
               className="recipe-description"
             ></span>
+            {/* The text is sliced in order to give more white space. */}
           </div>
           <DaysOfWeekSelector currentRecipe={recipe} />
         </div>
       );
     });
   };
-  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-  const onSubmit = (formValues) => {
-    props.fetchRecipes(formValues.searchRecipeQuery);
-  };
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+  // -=-=-=-=-= Render Components =-=-=-=-=-=-
   return (
     <>
       <div className="recipes-container">
@@ -100,15 +119,15 @@ const Recipes = (props) => {
     </>
   );
 };
-
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 const mapStateToProps = (state) => {
   const listOfRecipes = Object.keys(state.recipeReducer).map((key) => [
     key,
     state.recipeReducer[key],
   ]);
+
   return { recipeList: listOfRecipes, userReducer: state.userReducer };
 };
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 export default connect(mapStateToProps, { fetchRecipes })(
   reduxForm({ form: "fetchListRecipes" })(Recipes)

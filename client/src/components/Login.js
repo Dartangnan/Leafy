@@ -8,6 +8,7 @@ import {
   addRecipeToMenu,
   createProfile,
   getDateMilSec,
+  inicialIngredientList,
 } from "../actions";
 // -=-=-=-=-=-=-=-= Component =-=-=-=-=-=-=-=-
 const Login = (props) => {
@@ -24,6 +25,7 @@ const Login = (props) => {
     // Check to see if the information was loaded, which means that the user info was successfully retrieved
     if (Object.keys(props.userReducer).length !== 0) {
       props.getDateMilSec();
+      //populate the menu state if user has a menu saved
       if (props.userReducer.menuHistory) {
         props.addRecipeToMenu(
           "",
@@ -31,6 +33,13 @@ const Login = (props) => {
           JSON.parse(props.userReducer.menuHistory)
         );
       }
+      // populate the ingredient list state if user has already items added
+      if (props.userReducer.ingredientsList) {
+        props.inicialIngredientList(
+          JSON.parse(props.userReducer.ingredientsList)
+        );
+      }
+      //If it is a new user redirect to profile page so the user can finish filling their information, otherwise go to the home page where the meals of today are going to be displayed:
       if (props.userReducer.name) {
         props.history.push("/");
       } else {
@@ -277,4 +286,5 @@ export default connect(mapStateToProps, {
   addRecipeToMenu,
   createProfile,
   getDateMilSec,
+  inicialIngredientList,
 })(formWrapper);

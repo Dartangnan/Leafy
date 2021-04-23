@@ -1,22 +1,28 @@
 import React from "react";
-import "./Menu.css";
 import MenuItem from "./MenuItem";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { saveMenuToDB, fetchUser } from "../actions";
+import "./Menu.css";
+
+// -=-=-=-=-=-=-= Component =-=-=-=-=-=-=-=-
 
 const Menu = (props) => {
-  console.log(props.currentMenu);
+  //
+  // -=-=-=-=-= Helper function - Updates menu in DB =-=-=-=-=-
+
   const updateMenu = () => {
-    props
-      .saveMenuToDB(props.currentMenu, props.currentUser._id)
-      .then((ans) => props.fetchUser(""));
+    props.saveMenuToDB(props.currentMenu, props.userReducer._id);
   };
 
-  //
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+  // -=-=-=-=-=-=-=  Create components =-=-=-=-=-=-=-=-
+
   const daysWithItems = Object.keys(props.currentMenu).sort((a, b) => {
     return a - b;
-  });
+  }); // sort items per day of the week to make sure they are displayed properly
+
   const menuItems = daysWithItems.map((day) => {
     return (
       <div>
@@ -29,6 +35,10 @@ const Menu = (props) => {
       </div>
     );
   });
+
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+  // -=-=-=-=-=-=-= Render Components =-=-=-=-=-=-=-=-
 
   return (
     <div className="menu-container">
@@ -47,10 +57,14 @@ const Menu = (props) => {
       </div>
     </div>
   );
+
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 };
 
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
 const mapStateToProps = (state) => {
-  return { currentMenu: state.menuReducer, currentUser: state.userReducer };
+  return { currentMenu: state.menuReducer, userReducer: state.userReducer };
 };
 
 export default connect(mapStateToProps, { saveMenuToDB, fetchUser })(Menu);

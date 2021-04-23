@@ -41,6 +41,7 @@ export const deleteRecipeToMenu = (dayId, currentId) => (dispatch) => {
 
 export const saveMenuToDB = (menu, id) => async (dispatch) => {
   const response = await dataBase.patch("/menu", { id, menu });
+  dispatch({ type: "UPDATE_USER", payload: response.data });
 };
 
 export const updateProfile = (userData) => async (dispatch) => {

@@ -163,11 +163,13 @@ app.patch(
         { menuHistory: JSON.stringify(newMenu) },
         (err) => {
           if (err) console.log(err);
+          User.findOne({ _id: req.body.id }, function (err, user) {
+            if (err) console.log(err);
+            res.send(user);
+          });
         }
       );
     });
-
-    res.send(true);
   }
 );
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-

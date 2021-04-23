@@ -79,7 +79,7 @@ const DaysOfWeekSelector = (props) => {
   };
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-  // -=-=-=-=-= useEffect and useRef=-=-=-=-=-
+  // -=-=-=-=-= useEffect and useRef =-=-=-=-=-
 
   const weekDaysDivs = useRef(null);
 
@@ -90,16 +90,18 @@ const DaysOfWeekSelector = (props) => {
 
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+  // -=-=-=-=-= Generate divs with weekdays =-=-=-=-=-
+  const days = daysOfWeek.map((day) => {
+    return <div className="day-add-btn">{day}</div>;
+  });
+
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
   // -=-=-=-=-= Render components =-=-=-=-=-=-
+
   return (
     <div ref={weekDaysDivs} onClick={handleClick} className="days-of-week">
-      <div className="day-add-btn">Mon</div>
-      <div className="day-add-btn">Tue</div>
-      <div className="day-add-btn">Wed</div>
-      <div className="day-add-btn">Thu</div>
-      <div className="day-add-btn">Fri</div>
-      <div className="day-add-btn">Sat</div>
-      <div className="day-add-btn">Sun</div>
+      {days}
     </div>
   );
 };

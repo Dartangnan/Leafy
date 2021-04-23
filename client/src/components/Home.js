@@ -6,6 +6,7 @@ import "./Home.css";
 // -=-=-=-=-=-=-=-= Component =-=-=-=-=-=-=-=-
 
 const Home = (props) => {
+  //
   // -=-= In case the user is not logged in should be directed to the login page =-=-
   if (!props.currentUser || Object.keys(props.currentUser).length === 0) {
     props.history.push("/login");

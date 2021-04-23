@@ -12,49 +12,39 @@ import {
   addToIgredientList,
 } from "../actions";
 
-const today = new Date();
-const date = `${today.getFullYear()}-${
-  today.getMonth() + 1
-}-${today.getDate()}`;
-const dateTest = new Date(date);
-const todayMS = dateTest.valueOf();
+// -=-=-=-=-=-=-= Component =-=-=-=-=-=-=-=-
 
 const IngredientList = (props) => {
-  console.log(props.ingredients);
-  if (!props.user || Object.keys(props.user).length === 0) {
+  //
+  // -=-= In case the user is not logged in should be directed to the login page =-=-
+
+  if (!props.userReducer || Object.keys(props.userReducer).length === 0) {
     props.history.push("/login");
   }
-  let list;
-  const [itemContent, setItemContent] = useState("");
 
-  useEffect(() => {
-    if (
-      !props.user.ingredientsList ||
-      Object.keys(props.user.ingredientsList).length === 0
-    ) {
-      grocList = {};
-      return;
-    }
-    props.inicialIngredientList(JSON.parse(props.user.ingredientsList));
-    grocList = {
-      ...(props.user.ingredientsList
-        ? JSON.parse(props.user.ingredientsList)
-        : {}),
-      ...props.ingredients,
-    };
-  }, [props.user.ingredientsList]);
+  // -=-=-=-=-=-=-= Initial Variables =-=-=-=-=-=-=-=-
+
+  let list;
   let grocList = {
-    // ...(props.user.ingredientsList
-    //   ? JSON.parse(props.user.ingredientsList)
-    //   : {}),
     ...props.ingredients,
   };
-  const menu = props.currentMenu;
-  if (!menu) return <div>Loading</div>;
+
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+  // -=-=-=-=-=-=-= useRef and useEffect =-=-=-=-=-=-=-=-
+
+  const [itemContent, setItemContent] = useState("");
+
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+  // -=-=-=-=-=-=-= Helper Functions =-=-=-=-=-=-=-=-
+
+  // Remove ingredient from list state in the store
   const handleClick = (e) => {
     props.removeIngredient(e.target.name);
   };
 
+  // Add ingredient to the list state in the store
   const handleSubmit = (e) => {
     e.preventDefault();
     if (itemContent === "") return;
@@ -62,30 +52,38 @@ const IngredientList = (props) => {
     setItemContent("");
   };
 
+  // Handles typing change in order to make the variable controlled
   const handleChange = (e) => {
     setItemContent(e.target.value);
   };
 
+  // Delete the whole list from the Database
   const clearList = () => {
-    props.deleteIngredientList(JSON.stringify(grocList), props.user._id);
+    props.deleteIngredientList(JSON.stringify(grocList), props.userReducer._id);
   };
 
+  // Saves the list in the Database
   const saveList = () => {
-    props.saveIngredientList(JSON.stringify(grocList), props.user._id);
+    props.saveIngredientList(JSON.stringify(grocList), props.userReducer._id);
   };
 
+  // Writes in the list all the ingredients of the upcomming recipes saved in the menu state of the redux store:
   const updateList = () => {
     Object.keys(props.currentMenu).forEach((key) => {
-      if (key < todayMS) return;
+      if (key < props.todayMilliSec) return;
       Object.keys(props.currentMenu[key]).forEach((recipeID) => {
         props.addToIgredientList(
           props.currentMenu[key][recipeID],
           key,
-          todayMS
+          props.todayMilliSec
         );
       });
     });
   };
+
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+  // -=-=-=-=-=-=-= Create components =-=-=-=-=-=-=-=-
 
   if (!grocList) {
     list = <div></div>;
@@ -114,6 +112,11 @@ const IngredientList = (props) => {
       );
     });
   }
+
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+  // -=-=-=-=-=-=-= Render components =-=-=-=-=-=-=-=-
+
   return (
     <div className="grocery-container">
       <h1>Ingredient List</h1>
@@ -155,12 +158,14 @@ const IngredientList = (props) => {
   );
 };
 
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
-    user: state.userReducer,
+    userReducer: state.userReducer,
     currentMenu: state.menuReducer,
     ingredients: state.ingredientList,
+    todayMilliSec: state.todayMilliSec,
   };
 };
 

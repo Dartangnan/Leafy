@@ -4,7 +4,6 @@ export default (state = {}, action) => {
       if (action.payload.todayID > action.payload.daySelectedID) return state;
       if (!action.payload.recipe) return state;
       action.payload.recipe.extendedIngredients.forEach((ingredient, index) => {
-        console.log(index);
         if (Object.keys(state).includes(ingredient.id)) {
           if (
             state[action.payload.recipe.id].units ===
@@ -19,11 +18,9 @@ export default (state = {}, action) => {
           units: ingredient.measures.us.unitShort,
         };
       });
-      console.log(state);
       return { ...state };
 
     case "DELETE_INGR_FROM_RECIPE":
-      console.log(action.payload.recipe);
       action.payload.recipe.extendedIngredients.forEach((ingredient) => {
         if (!state[ingredient.id]) return;
         if (state[ingredient.id].amount === ingredient.measures.us.amount) {

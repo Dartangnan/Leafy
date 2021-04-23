@@ -1,22 +1,34 @@
 import React from "react";
-// import "./Menu.css";
 
+// -=-=-=-=-=-=-= Component =-=-=-=-=-=-=-=-
+//
 const MenuItem = (props) => {
+  //
+  // In case there are no items in the menu
+
   const objKeys = Object.keys(props.itemOfMenu);
   if (objKeys.length === 0) return "";
 
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+  // Converting the day passed by parent component to a nice format so can be displayed
+
   const currentDate = new Date(+props.dayOfWeek);
+
   const currentDateFormat = currentDate.toLocaleString("default", {
     day: "numeric",
     month: "long",
     year: "numeric",
   });
+
   const currentDayWeek = currentDate.toLocaleString("default", {
     weekday: "long",
   });
 
-  //   console.log(currentDate);
-  console.log(objKeys);
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+  // -=-=-=-=-=-=-= Generate components =-=-=-=-=-=-=-=-
+
   const itemsOfDay = objKeys.map((item) => {
     return (
       <>
@@ -27,6 +39,11 @@ const MenuItem = (props) => {
       </>
     );
   });
+
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+  // -=-=-=-=-=-=-= Render components =-=-=-=-=-=-=-=-
+
   return (
     <div className="daily-menu">
       <div className="item-header">
@@ -37,5 +54,6 @@ const MenuItem = (props) => {
     </div>
   );
 };
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 export default MenuItem;

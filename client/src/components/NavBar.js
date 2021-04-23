@@ -57,7 +57,7 @@ const NavBar = (props) => {
             />
           </div>
           <img alt="" className="avatar-leaves" src={leavesAvatar} />
-          <h4 className="user-name">Dart</h4>
+          <h4 className="user-name">{props.userInfo.nickName || ""}</h4>
         </div>
         <h3 className="initial-message">Hello, how are you doing today?</h3>
         <div className="bar-toggle">

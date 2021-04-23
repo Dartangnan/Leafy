@@ -90,7 +90,8 @@
 }
 
 .avatar-picture img {
-  height: 120%;
+  width: 120%;
+  min-height: 100%;
 }
 
 .user-name {
@@ -104,13 +105,13 @@
   background-color: #ffffff;
   padding: 0px 20px;
   box-shadow: 6px 6px 0 0px #b7da98;
-  top: 0px;
+  top: 20px;
 }
 
 .avatar-leaves {
   position: absolute;
   z-index: 3;
-  top: 0px;
+  top: 25px;
   width: 90px;
 }
 

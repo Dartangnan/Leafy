@@ -1,6 +1,10 @@
 import recipes from "../apis/recipes";
 import dataBase from "../apis/dataBase";
 
+export const getDateMilSec = () => (dispatch) => {
+  dispatch({ type: "RETRIEVE_DATE" });
+};
+
 export const fetchRecipes = (searchQuery) => async (dispatch) => {
   const response = await recipes.get("", { params: { query: searchQuery } });
   // console.log(response);

@@ -36,17 +36,22 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model("user", userSchema);
 
 const user = new User({
-  name: "Dartangnan Moreira Theml",
-  nickName: "Dart",
-  password: "user123",
-  phone: 1234567788,
-  email: "dart_theml@email.com",
+  name: "Default User",
+  nickName: "User",
+  password: "password123",
+  email: "user@email.com",
   country: "",
   avatar: "",
   menuHistory: "",
   ingredientsList: "",
 });
 // user.save();
+// User.deleteOne({ email: "user@email.com" }, function (err) {
+//   console.log(err);
+// });
+User.findOne({}, function (user, err) {
+  console.log(user);
+});
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 var corsOptions = {
   origin: ["http://localhost:3000", "http://localhost:3000/Profile"],
@@ -68,8 +73,15 @@ app.post("/", bodyParser.json(), function (req, res) {
         email: userInfo.email,
         password: userInfo.password,
       });
-      console.log(user);
-      res.send(user);
+      const newUser = {};
+      console.log(Object.keys(user._doc));
+      Object.keys(user._doc).forEach((key) => {
+        if (key === "password") return;
+        newUser[key] = user[key];
+      });
+      // user.save();
+      console.log(newUser);
+      res.send(newUser);
     } else {
       console.log("email its been used already");
       res.send(false);
@@ -92,46 +104,39 @@ app.patch("/", (req, res, next) => {
       return;
     }
     if (fields) {
-      User.updateOne({ name: fields.name }, fields, function (err) {
+      console.log(fields);
+      User.updateOne({ _id: fields._id }, fields, function (err) {
+        console.log("UPDATED");
         if (err) {
           console.log(err);
         }
-        console.log("UPDATED FIELDS");
       });
     }
 
     if (files.avatar) {
-      // console.log(typeof files);
-      // console.log(files.avatar.path.replace(__dirname, ""));
       User.updateOne(
-        { name: fields.name },
+        { _id: fields._id },
         { avatar: files.avatar.path.replace(__dirname, "") },
         function (err) {
           if (err) {
             console.log(err);
           }
-          console.log("UPDATED FILE");
         }
       );
     }
-    User.find((err, user) => {
-      // console.log(user);
+    console.log(fields);
+    User.findOne({ _id: fields._id }, (err, user) => {
+      if (err) {
+        console.log(err);
+        res.send(false);
+      } else {
+        console.log(user);
+        res.send(user);
+      }
     });
-    res.send(true);
   });
 });
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-
-// -=-=-=-=-=-=-=-=-=-= Retrieve user's information =-=-=-=-=-=-=-=-=-=-=-
-app.get("/", function (req, res) {
-  const userInfo = req.body;
-  User.find((err, user) => {
-    if (err) return err;
-    // console.log(user);
-    res.send(user[0]);
-  });
-});
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 // -=-=-=-=-=-=-=-=-=-= Update user's menu =-=-=-=-=-=-=-=-=-=-=-
@@ -165,6 +170,7 @@ app.patch(
     res.send(true);
   }
 );
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 // -=-=-=-=-=-=-=-=-=-= Save Ingredients List =-=-=-=-=-=-=-=-=-=-=-
 app.post(
@@ -184,7 +190,7 @@ app.post(
 );
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-// -=-=-=-=-=-=-=-=-=-= Save Ingredients List =-=-=-=-=-=-=-=-=-=-=-
+// -=-=-=-=-=-=-=-=-=-= Delete Ingredients List =-=-=-=-=-=-=-=-=-=-=-
 app.put(
   "/deleteIngredients",
   bodyParser.json({ limit: "25mb", extended: true }),
@@ -198,10 +204,11 @@ app.put(
 );
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-// -=-=-=-=-=-=-=-=-=-= Save Ingredients List =-=-=-=-=-=-=-=-=-=-=-
+// -=-=-=-=-=-=-=-=-=-= User's Login =-=-=-=-=-=-=-=-=-=-=-
 app.post("/login", bodyParser.json({ extended: false }), (req, res) => {
   const userInfo = req.body;
   console.log(userInfo);
+
   User.findOne(
     { email: userInfo.email, password: userInfo.password },
     (err, user) => {

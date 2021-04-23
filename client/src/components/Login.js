@@ -1,9 +1,14 @@
 import React, { useRef, useEffect } from "react";
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, reset } from "redux-form";
 import { connect } from "react-redux";
 import ReactDOM from "react-dom";
 import "./Login.css";
-import { fetchUser, addRecipeToMenu, createProfile } from "../actions";
+import {
+  fetchUser,
+  addRecipeToMenu,
+  createProfile,
+  getDateMilSec,
+} from "../actions";
 // -=-=-=-=-=-=-=-= Component =-=-=-=-=-=-=-=-
 const Login = (props) => {
   //
@@ -14,10 +19,11 @@ const Login = (props) => {
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
   // -=-=-=-=-=-=-=-= useEffect Hook =-=-=-=-=-=-=-=-
-
+  console.log(props, "PROPS");
   useEffect(() => {
     // Check to see if the information was loaded, which means that the user info was successfully retrieved
     if (Object.keys(props.userReducer).length !== 0) {
+      props.getDateMilSec();
       if (props.userReducer.menuHistory) {
         props.addRecipeToMenu(
           "",
@@ -29,6 +35,7 @@ const Login = (props) => {
         props.history.push("/");
       } else {
         props.history.push("/profile");
+        props.reset();
 
         return;
       }
@@ -242,7 +249,7 @@ const Login = (props) => {
           <span>
             E-mail: user@email.com
             <br />
-            Password: user123
+            Password: password123
           </span>
         </p>
       </div>
@@ -253,7 +260,9 @@ const Login = (props) => {
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-const formWrapper = reduxForm({ form: "loginInfo" })(Login);
+const formWrapper = reduxForm({
+  form: "loginInfo",
+})(Login);
 
 const mapStateToProps = (state) => {
   console.log(state);
@@ -267,4 +276,5 @@ export default connect(mapStateToProps, {
   fetchUser,
   addRecipeToMenu,
   createProfile,
+  getDateMilSec,
 })(formWrapper);

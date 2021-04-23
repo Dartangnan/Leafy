@@ -86,6 +86,6 @@ hr {
 }
 
 .profile-picture img {
-  min-width: 100%;
+  width: 120%;
   min-height: 100%;
 }

@@ -1,25 +1,24 @@
 import React, { useState } from "react";
-import "./Home.css";
 import { connect } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import "./Home.css";
 
-// ----- Get current date in milissenconds ----
-const today = new Date();
-const date = `${today.getFullYear()}-${
-  today.getMonth() + 1
-}-${today.getDate()}`;
-const dateTest = new Date(date);
-const todayMS = dateTest.valueOf();
-console.log("IN");
-// ---------------------------------------------
+// -=-=-=-=-=-=-=-= Component =-=-=-=-=-=-=-=-
+
 const Home = (props) => {
+  // -=-= In case the user is not logged in should be directed to the login page =-=-
   if (!props.currentUser || Object.keys(props.currentUser).length === 0) {
     props.history.push("/login");
   }
-  const location = useLocation();
-  const [currentDay, setCurrentDate] = useState(todayMS);
-  // console.log(currentDay);
 
+  // In order to comeback to this route once a single recipe is opened:
+  const location = useLocation();
+
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+  const [currentDay, setCurrentDate] = useState(props.todayMilliSec);
+
+  // -=-=-= Getting information to display the date of the day that contains the recipes showed: =-=-
   const currentDate = new Date(currentDay);
   const currentDayMonth = currentDate.toLocaleString("default", {
     day: "numeric",
@@ -30,6 +29,10 @@ const Home = (props) => {
     year: "numeric",
   });
 
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+  // -=-=-=-=-=-=-=-= Helper functions - change the day that is shown =-=-=-=-=-=-=-=-
+
   const goBackADay = () => {
     setCurrentDate(currentDay - 86400000);
   };
@@ -38,12 +41,16 @@ const Home = (props) => {
     setCurrentDate(currentDay + 86400000);
   };
 
-  let todayMenuDisplay = <div>No data available</div>;
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+  // Initial Variable:
+  let todayMenuDisplay;
+
+  // -=-=-=-=-=-=-=-= Generate the cards where the recipes are shown =-=-=-=-=-=-=-=-
   if (props.currentUser.menuHistory) {
     const menu = JSON.parse(props.currentUser.menuHistory);
     if (!menu[`${currentDay}`]) {
-      todayMenuDisplay = <div>Not available</div>;
+      todayMenuDisplay = <div>No data available</div>;
     } else {
       let todayMenu = menu[`${currentDay}`];
       todayMenuDisplay = Object.keys(menu[`${currentDay}`]).map((item) => {
@@ -78,7 +85,9 @@ const Home = (props) => {
       });
     }
   }
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+  // -=-=-=-=-=-=-=-= Render components =-=-=-=-=-=-=-=-
   return (
     <div className="home-container">
       <h1>Home</h1>
@@ -94,11 +103,12 @@ const Home = (props) => {
       <div className="display-todays-recipe">{todayMenuDisplay}</div>
     </div>
   );
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 };
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 const mapStateToProps = (state) => {
-  console.log(state);
-  return { currentUser: state.userReducer };
+  return { currentUser: state.userReducer, todayMilliSec: state.todayMilliSec };
 };
 
 export default connect(mapStateToProps, {})(Home);

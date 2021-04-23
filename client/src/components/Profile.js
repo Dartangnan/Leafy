@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Field, reduxForm } from "redux-form";
 import "./Profile.css";
-// import axios from "axios";
 import { connect } from "react-redux";
 import { updateProfile } from "../actions";
 
+// -=-=-=-=-=-=-=-= Adjust React-Form to accept files as input =-=-=-=-=-=-=-=-
 const adaptFileEventToValue = (delegate) => (e) => delegate(e.target.files[0]);
 const FileInput = ({
   input: { value: omitValue, onChange, onBlur, ...inputProps },
@@ -23,15 +23,17 @@ const FileInput = ({
   );
 };
 
-// -=-=-=-=-=-=-=-=-=-=-= COMPONENT =-=-=-=-=-=-=-=-=-=-=-=-=-
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+// -=-=-=-=-=-=-=-=-=-=-= Component =-=-=-=-=-=-=-=-=-=-=-=-=-
 const Profile = (props) => {
   //
-  //
-  if (!props.isLoaded || Object.keys(props.isLoaded).length === 0) {
+  // In case the user is not logged in should be directed to the login page
+  if (!props.initialValues || Object.keys(props.initialValues).length === 0) {
     props.history.push("/login");
   }
-  //
-  //
+
+  // -=-=-=-=-=-=-=-=-=-=-= Handle Submit =-=-=-=-=-=-=-=-=-=-=-=-=-
   const onFormSubmit = (formValues) => {
     const fd = new FormData();
     Object.keys(formValues).forEach((key) => {
@@ -43,9 +45,11 @@ const Profile = (props) => {
         return;
       fd.append(key, formValues[key]);
     });
-    fd.append("name", formValues.name);
+    fd.append("_id", formValues._id);
     props.updateProfile(fd);
   };
+
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
   return (
     <>
@@ -131,8 +135,8 @@ const Profile = (props) => {
   );
 };
 
-const mapStateToProps = (state, ownProps) => {
-  return { initialValues: state.userReducer, isLoaded: state.userReducer };
+const mapStateToProps = (state) => {
+  return { initialValues: state.userReducer };
 };
 
 const formWrappers = reduxForm({ form: "userInfo", enableReinitialize: true })(

@@ -96,3 +96,52 @@
 .home-link .save-btn:hover {
   background-color: #7ea157;
 }
+
+@media only screen and (max-width: 650px) {
+  h1 {
+    font-size: 3rem;
+  }
+
+  .home-container {
+    position: absolute;
+    background-color: white;
+    padding: 15px 15px;
+  }
+
+  .recipe-card {
+    margin: 0 0 50px;
+    flex-flow: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .display-todays-recipe {
+    display: flex;
+    flex-flow: column;
+    overflow-x: visible;
+    width: 100%;
+  }
+
+  .title-recipe {
+    width: 100%;
+    min-height: 80px;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+  }
+
+  .info-recipe {
+    width: 80%;
+    padding: 25px 10px;
+  }
+
+  .image-recipe {
+    width: 80%;
+    margin: 40px 0;
+  }
+
+  .day-selector {
+    justify-content: center;
+    width: 100%;
+  }
+}

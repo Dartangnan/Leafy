@@ -5,8 +5,6 @@ h1 {
 }
 
 hr {
-  /* height: 0px;
-    border-color: #969696; */
   width: 50%;
   margin-bottom: 25px;
 }
@@ -88,4 +86,37 @@ hr {
 .profile-picture img {
   width: 120%;
   min-height: 100%;
+}
+
+@media only screen and (max-width: 650px) {
+  .profile-container {
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    align-items: center;
+    background-image: url(../images/login-bg.png),
+      linear-gradient(#ffffff80, #e2ecdf);
+    background-blend-mode: hue;
+    align-self: center;
+  }
+
+  .user-information {
+    width: 100%;
+    margin: 0 5px;
+  }
+
+  .user-field {
+    font-size: 1.3rem;
+    color: #94af7c;
+    width: 90%;
+    margin-bottom: 60px;
+    border-style: none;
+    border-bottom: 1px solid #5e8e3f;
+    outline: none;
+    background-color: rgba(218, 218, 218, 0);
+  }
+
+  .form-field {
+    min-width: 100%;
+  }
 }

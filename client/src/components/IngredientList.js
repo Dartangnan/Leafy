@@ -141,7 +141,7 @@ const IngredientList = (props) => {
           />
         </div>
       </div>
-      <div className="menu-bottom-btns">
+      <div className="menu-bottom-btns-ingr">
         <button onClick={clearList} className="back-btn">
           Clear List
         </button>

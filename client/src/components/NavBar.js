@@ -1,5 +1,5 @@
 //  -=-=-=-=-=-=-=-= Imports =-=-=-=-=-=-=-=-
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./NavBar.css";
 import imgLower from "../images/bottom-nav-bar-logo.png";
@@ -13,7 +13,22 @@ import { logOut, inicialIngredientList, addRecipeToMenu } from "../actions";
 const NavBar = (props) => {
   // console.log(props);
   //
+
   const navBarDOM = useRef(null);
+  useEffect(() => {
+    navBarDOM.current.closest("body").addEventListener("click", (e) => {
+      navBarDOM.current.querySelector(".nav-links").style.transition =
+        "all 1s ease-out";
+
+      if (e.target.classList.contains("toggle-links")) {
+        navBarDOM.current
+          .querySelector(".nav-links")
+          .classList.toggle("active");
+        return;
+      }
+      navBarDOM.current.querySelector(".nav-links").classList.add("active");
+    });
+  }, [window.screen.width]);
 
   const hideBar = () => {
     navBarDOM.current.classList.add("hidden-bar");
@@ -41,6 +56,9 @@ const NavBar = (props) => {
   return (
     <div ref={navBarDOM} className="nav-bar">
       {/*------------ UPPER PART OF THE NAVBAR ------------ */}
+      <div className="bar-toggle">
+        <img onClick={hideBar} alt="x-img" src={xNav} />
+      </div>
       <div className="upper-nav">
         <div className="avatar">
           <div className="avatar-picture">
@@ -58,10 +76,6 @@ const NavBar = (props) => {
           </div>
           <img alt="" className="avatar-leaves" src={leavesAvatar} />
           <h4 className="user-name">{props.userInfo.nickName || ""}</h4>
-        </div>
-        <h3 className="initial-message">Hello, how are you doing today?</h3>
-        <div className="bar-toggle">
-          <img onClick={hideBar} alt="x-img" src={xNav} />
         </div>
       </div>
       {/*---------------------------------------------------  */}
@@ -105,7 +119,9 @@ const NavBar = (props) => {
         </Link>
       </ul>
       {/*--------------------------------------------------- */}
-
+      <div className="nav-mobile toggle-links">
+        <i class="fas fa-bars toggle-links"></i>
+      </div>
       {/*----------------- LOWER NAV BAR ----------------- */}
       <div className="lower-nav">
         <img alt="bottom-logo" src={imgLower} />

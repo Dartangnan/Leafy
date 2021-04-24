@@ -1,10 +1,11 @@
 .login-container {
   position: fixed;
   width: 100vw;
-  display: grid;
+  display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  place-items: center;
+  align-items: center;
+  justify-content: center;
+  /* place-items: center; */
   height: 100vh;
   background-color: white;
   background-image: url(../images/login-bg.png);
@@ -163,4 +164,40 @@
 
 .close-popup-header {
   margin-bottom: 0;
+}
+
+@media only screen and (max-width: 650px) {
+  .login-box {
+    display: flex;
+    flex-flow: column;
+    max-width: 75vw;
+  }
+
+  .login-box form {
+    max-width: 75vw;
+    padding: 25px 0;
+  }
+
+  .single-input-label {
+    margin-bottom: 20px;
+    font-size: 1rem;
+    width: 100%;
+    align-items: flex-end;
+  }
+
+  .single-input-label label {
+    margin-right: 5px;
+    font-size: 0.8rem;
+  }
+
+  .single-input-label input {
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
+    width: 100%;
+  }
+
+  .login-btns {
+    width: 100%;
+  }
 }

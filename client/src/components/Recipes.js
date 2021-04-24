@@ -109,8 +109,10 @@ const Recipes = (props) => {
           <Link to="/Recipes/Menu" className="menu-btn">
             Menu
           </Link>
-          <Field name="searchRecipeQuery" component={renderInputBar} />
-          <Field component={renderInputBtn} name="submitSearch" />
+          <div className="search-div">
+            <Field name="searchRecipeQuery" component={renderInputBar} />
+            <Field component={renderInputBtn} name="submitSearch" />
+          </div>
         </form>
         <div className="all-recipes">
           {props.recipeList[0] ? renderComponents(props.recipeList[0][1]) : ""}

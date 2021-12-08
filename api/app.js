@@ -16,10 +16,17 @@ app.use("/uploads/", express.static("uploads"));
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 // -=-=-=-=-=-=-=-=-=-= Database =-=-=-=-=-=-=-=-=-=-=-
-mongoose.connect("mongodb://localhost:27017/leafyDB", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+// mongoose.connect("mongodb://localhost:27017/leafyDB", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
+mongoose.connect(
+  `mongodb+srv://leafyAdmin:${process.env.DB}@cluster0.6z92i.mongodb.net/usersInfo?retryWrites=true&w=majority`
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 
 const userSchema = new mongoose.Schema({
   name: String,

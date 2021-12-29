@@ -27,6 +27,8 @@ const FileInput = ({
 
 // -=-=-=-=-=-=-=-=-=-=-= Component =-=-=-=-=-=-=-=-=-=-=-=-=-
 const Profile = (props) => {
+  console.log(__dirname);
+
   //
   // In case the user is not logged in should be directed to the login page
   if (!props.initialValues || Object.keys(props.initialValues).length === 0) {
@@ -61,10 +63,7 @@ const Profile = (props) => {
             alt=""
             src={
               props.initialValues.avatar
-                ? `http://localhost:3001${props.initialValues.avatar.replaceAll(
-                    "/",
-                    "\\"
-                  )}`
+                ? `${props.initialValues.avatar.replaceAll("\\", "/").slice(6)}`
                 : ""
             }
           />

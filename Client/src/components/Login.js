@@ -133,13 +133,19 @@ const Login = (props) => {
 
   // -=-=-=-=-=-=-=-= Helper function - Handle form submit =-=-=-=-=-=-=-=-
   const onFormSubmit = async (formValues, _, props) => {
-    clearErrorMsgs();
-    // Attempt to fetch the user information in the DB according to the email and password:
-    await props.fetchUser(formValues.email, formValues.password);
-    // In case the API returns false an error message is shown:
-    if (!props.userReducer && loginBox.current) {
-      loginBox.current.querySelector(".error-not-found-account").style.display =
-        "block";
+    try {
+      clearErrorMsgs();
+      // Attempt to fetch the user information in the DB according to the email and password:
+      await props.fetchUser(formValues.email, formValues.password);
+      console.log("AFTER SUBMIT");
+      // In case the API returns false an error message is shown:
+      if (!props.userReducer && loginBox.current) {
+        loginBox.current.querySelector(
+          ".error-not-found-account"
+        ).style.display = "block";
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -166,9 +172,8 @@ const Login = (props) => {
       emailValid = true;
     }
 
-    loginBox.current.querySelector(
-      ".error-message-email"
-    ).style.display = emailValid ? "none" : "block";
+    loginBox.current.querySelector(".error-message-email").style.display =
+      emailValid ? "none" : "block";
 
     // Checking if the password entered meets the requirements:
 
@@ -177,9 +182,8 @@ const Login = (props) => {
     } else {
       passwordValid = true;
     }
-    loginBox.current.querySelector(
-      ".error-message-password"
-    ).style.display = passwordValid ? "none" : "block";
+    loginBox.current.querySelector(".error-message-password").style.display =
+      passwordValid ? "none" : "block";
 
     // In case both password and email are valid, check if email was used before and return a new user or false in case the user was registered already:
     if (passwordValid && emailValid) {

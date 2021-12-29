@@ -5,17 +5,21 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const formidable = require("formidable");
 const fs = require("fs");
+const Flickr = require("flickr-sdk");
+const pathh = require("path");
+const axios = require("axios");
+// const oauth = require("oauth");
 require("dotenv").config();
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 // -=-=-=-=-=-= Setting up app =-=-=-=-=-=-=-
 const app = express();
-app.use("/uploads/", express.static("uploads"));
+// app.use("/uploads/", express.static("uploads"));
 
-app.use(express.static(path.join(__dirname, "build")));
+app.use(express.static(pathh.join(__dirname, "build")));
 
 app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
+  res.sendFile(pathh.join(__dirname, "build", "index.html"));
 });
 
 // app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
@@ -71,20 +75,25 @@ const user = new User({
 // User.deleteOne({ email: "user@email.com" }, function (err) {
 //   console.log(err);
 // });
-User.findOne({}, function (user, err) {
-  console.log(user);
-});
+// User.findOne({}, function (user, err) {
+//   console.log(user);
+// });
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+// -=-=-=-=-=-=-=-=-=-= Cors Options =-=-=-=-=-=-=-=-=-=-=-
 var corsOptions = {
   origin: [
     "http://localhost:3000",
     "http://localhost:3000/Profile",
+    "/",
     process.env.PORT,
   ],
   optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
 // -=-=-=-=-=-=-=-=-=-= Add new user =-=-=-=-=-=-=-=-=-=-=-
 app.post("/", bodyParser.json(), function (req, res) {
   const userInfo = req.body;
@@ -121,7 +130,7 @@ app.patch("/", (req, res, next) => {
   const form = formidable({
     multiple: true,
     keepExtensions: true,
-    uploadDir: __dirname + "/uploads/",
+    uploadDir: __dirname + "/build/uploads/",
   });
 
   form.parse(req, (err, fields, files) => {

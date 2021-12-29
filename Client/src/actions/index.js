@@ -11,29 +11,28 @@ export const fetchRecipes = (searchQuery) => async (dispatch) => {
   dispatch({ type: "FETCH_RECIPES", payload: response.data.results });
 };
 
-export const addRecipeToMenu = (recipe, daySelectedID, fullMenu) => (
-  dispatch
-) => {
-  if (fullMenu) {
-    const recipeObj = {};
-    const idRec = "";
-    dispatch({
-      type: "ADD_RECIPE",
-      payload: [recipeObj, daySelectedID, idRec, fullMenu],
-    });
-  }
-  if (!fullMenu) {
-    console.log(recipe, daySelectedID);
-    const idRec = recipe.id;
-    const recipeObj = {};
-    recipeObj[idRec] = recipe;
-    console.log("-------", recipeObj, daySelectedID, idRec, fullMenu);
-    dispatch({
-      type: "ADD_RECIPE",
-      payload: [recipeObj, daySelectedID, idRec, fullMenu],
-    });
-  }
-};
+export const addRecipeToMenu =
+  (recipe, daySelectedID, fullMenu) => (dispatch) => {
+    if (fullMenu) {
+      const recipeObj = {};
+      const idRec = "";
+      dispatch({
+        type: "ADD_RECIPE",
+        payload: [recipeObj, daySelectedID, idRec, fullMenu],
+      });
+    }
+    if (!fullMenu) {
+      console.log(recipe, daySelectedID);
+      const idRec = recipe.id;
+      const recipeObj = {};
+      recipeObj[idRec] = recipe;
+      console.log("-------", recipeObj, daySelectedID, idRec, fullMenu);
+      dispatch({
+        type: "ADD_RECIPE",
+        payload: [recipeObj, daySelectedID, idRec, fullMenu],
+      });
+    }
+  };
 
 export const deleteRecipeToMenu = (dayId, currentId) => (dispatch) => {
   dispatch({ type: "DELETE_RECIPE", payload: { dayId, currentId } });
@@ -49,14 +48,13 @@ export const updateProfile = (userData) => async (dispatch) => {
   dispatch({ type: "UPDATE_USER", payload: response.data });
 };
 
-export const addToIgredientList = (recipe, daySelectedID, todayID) => (
-  dispatch
-) => {
-  dispatch({
-    type: "ADD_INGR_FROM_RECIPE",
-    payload: { recipe, daySelectedID, todayID },
-  });
-};
+export const addToIgredientList =
+  (recipe, daySelectedID, todayID) => (dispatch) => {
+    dispatch({
+      type: "ADD_INGR_FROM_RECIPE",
+      payload: { recipe, daySelectedID, todayID },
+    });
+  };
 
 export const removeFromIgredientList = (recipe) => (dispatch) => {
   dispatch({ type: "DELETE_INGR_FROM_RECIPE", payload: { recipe } });
@@ -77,16 +75,15 @@ export const saveIngredientList = (ingredientList, id) => async (dispatch) => {
   });
 };
 
-export const deleteIngredientList = (ingredientList, id) => async (
-  dispatch
-) => {
-  const response = await dataBase.put("/deleteIngredients", {
-    id,
-    ingredientList,
-  });
-  console.log(id);
-  dispatch({ type: "DELETE_INGREDIENTS", payload: response.data });
-};
+export const deleteIngredientList =
+  (ingredientList, id) => async (dispatch) => {
+    const response = await dataBase.put("/deleteIngredients", {
+      id,
+      ingredientList,
+    });
+    console.log(id);
+    dispatch({ type: "DELETE_INGREDIENTS", payload: response.data });
+  };
 
 export const inicialIngredientList = (ingrList) => (dispatch) => {
   dispatch({ type: "INITIAL_INGREDIENTS", payload: ingrList });
@@ -104,11 +101,17 @@ export const deleteProfile = (userId) => async (dispatch) => {
 };
 
 export const fetchUser = (email, password) => async (dispatch) => {
-  console.log("INSIDE");
-  const test = { email: email, password: password };
-  const response = await dataBase.post("/login", test);
-  console.log(response.data, "action");
-  dispatch({ type: "USER_LOGIN", payload: response.data });
+  try {
+    console.log("INSIDE");
+    const test = { email: email, password: password };
+    const response = await dataBase.post("/login", test);
+    console.log(response.data, "action");
+    console.log("OUTSIDE");
+    dispatch({ type: "USER_LOGIN", payload: response.data });
+  } catch (err) {
+    console.log("OUT ERROR");
+    console.log(err);
+  }
 };
 
 export const logOut = () => (dispatch) => {

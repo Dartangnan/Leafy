@@ -66,10 +66,7 @@ const NavBar = (props) => {
               alt=""
               src={
                 props.userInfo.avatar
-                  ? `http://localhost:3001${props.userInfo.avatar.replaceAll(
-                      "/",
-                      "\\"
-                    )}`
+                  ? `${props.userInfo.avatar.replaceAll("\\", "/").slice(6)}`
                   : ""
               }
             />
